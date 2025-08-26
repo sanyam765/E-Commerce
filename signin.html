@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HearHut Sign In</title>
+
+  <!-- Orbitron Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #0d0d0d, #000000);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px; /* more spacing between logo & box */
+    }
+
+    .hearhut-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 50px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      text-shadow: 0 0 15px #00ff88, 0 0 25px #0077ff;
+      animation: glowPulse 2.5s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 12px #00ff88, 0 0 30px #0077ff; }
+      to { text-shadow: 0 0 25px #00ff88, 0 0 50px #0077ff; }
+    }
+
+    .hearhut-logo i,
+    .hear,
+    .hut {
+      background: linear-gradient(90deg, #00ff88, #0077ff);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: waveMove 4s linear infinite;
+    }
+    .hut { animation-delay: 2s; }
+
+    @keyframes waveMove {
+      0% { background-position: 0% 0; }
+      50% { background-position: 100% 0; }
+      100% { background-position: 0% 0; }
+    }
+
+    .box {
+      backdrop-filter: blur(15px);
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 50px; /* more padding */
+      border-radius: 20px;
+      box-shadow: 0 10px 50px rgba(0, 255, 136, 0.15), 0 0 30px rgba(0, 119, 255, 0.15);
+      width: 100%;
+      max-width: 450px; /* slightly larger */
+      border: 1px solid rgba(0, 255, 136, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 60px rgba(0, 255, 136, 0.25), 0 0 45px rgba(0, 119, 255, 0.25);
+    }
+
+    .box h1 {
+      font-size: 30px; /* bigger heading */
+      margin-bottom: 30px;
+      color: #00ff88;
+      text-align: center;
+      text-shadow: 0 0 12px #00ff88;
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 22px; /* more space between inputs */
+    }
+
+    .inputs input {
+      padding: 16px 18px; /* bigger inputs */
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .inputs input:focus {
+      box-shadow: 0 0 15px #00ff88, 0 0 25px #0077ff;
+      border: 1px solid #00ff88;
+    }
+
+    .inputs input::placeholder {
+      color: #bbb;
+    }
+
+    .button {
+      margin-top: 30px; /* more space */
+      background: linear-gradient(90deg, #00ff88, #0077ff);
+      border: none;
+      color: black;
+      padding: 16px; /* bigger button */
+      width: 100%;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0,255,136,0.3), 0 0 25px rgba(0,119,255,0.3);
+    }
+
+    .button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 30px rgba(0,255,136,0.6), 0 0 35px rgba(0,119,255,0.6);
+    }
+
+    @media (max-width: 480px) {
+      .hearhut-logo { font-size: 36px; }
+      .box h1 { font-size: 24px; }
+      .inputs input { font-size: 15px; padding: 14px; }
+      .button { font-size: 15px; padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <form action="">
+    <div class="container">
+      <div class="hearhut-logo">
+        <i class="fas fa-headphones-alt"></i>
+        <span class="hear">Hear</span><span class="hut">Hut</span>
+      </div>
+      <div class="box">
+        <h1>Sign In</h1>
+        <div class="inputs">
+          <input type="text" placeholder="Enter Email" required />
+          <input type="password" placeholder="Enter Password" required />
+        </div>
+        <input type="submit" class="button" value="Login" />
+      </div>
+    </div>
+  </form>
+</body>
+</html>
