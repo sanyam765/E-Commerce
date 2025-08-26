@@ -1,55 +1,15 @@
-// Cart counter
-let cartCount = 0;
-const cartCounter = document.getElementById('cart-count');
+const products = document.querySelectorAll(".product-card")
+products.forEach(product=>{
+  product.addEventListener("click",()=>{
+const name = product.getAttribute('data-name')
+const price = product.getAttribute('data-price')
+const id = product.getAttribute('data-id')
+const image = product.querySelector("img").getAttribute("src")
+const selectedProduct = { name, price, id, image };
 
-// Select all add-to-cart buttons
-const addCartButtons = document.querySelectorAll('.add-to-cart');
+      
+      localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
 
-addCartButtons.forEach(button => {
-  button.addEventListener('click', e => {
-    e.preventDefault(); // prevent page jump
-    cartCount++;
-    cartCounter.textContent = cartCount;
-
-    // Optional: store product info in cart array
-    const productName = button.closest('.product-card').dataset.name;
-    const productPrice = button.closest('.product-card').dataset.price;
-    console.log(`Added to cart: ${productName} - ₹${productPrice}`);
-  });
-});
-  const productCards = document.querySelectorAll('.product-card');
-
-  productCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const productData = {
-        id: card.dataset.id,
-        name: card.dataset.name,
-        price: card.dataset.price,
-        image: card.querySelector('img').src
-      };
-
-      // Save to localStorage
-      localStorage.setItem('selectedProduct', JSON.stringify(productData));
-
-      // Redirect to product details page
-      window.location.href = 'product.html';
-    });
-  });
-  // script.js (homepage)
-const addToDetailPage = (productCard) => {
-  const product = {
-    name: productCard.dataset.name,
-    price: productCard.dataset.price,
-    image: productCard.querySelector('img').src, // full path
-    brand: "HearHut"
-  };
-  localStorage.setItem('selectedProduct', JSON.stringify(product));
-  window.location.href = "product.html";
-}
-
-// Example:
-document.querySelectorAll('.product-card').forEach(card => {
-  card.addEventListener('click', () => addToDetailPage(card));
-});
-
-
+      window.location.href = "product.html";
+  })
+})
