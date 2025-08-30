@@ -1,348 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HearHut</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* HERO BANNER */
-    .hero-banner {
-      background: url('images/hero-bg.jpg') center/cover no-repeat;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      position: relative;
-    }
-    .hero-banner::after {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.4); /* overlay */
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-    .hero-content h1 {
-      font-size: 3rem;
-      margin-bottom: 15px;
-    }
-    .hero-content p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-    .btn-cta {
-      background: #0072ff;
-      padding: 12px 24px;
-      border-radius: 8px;
-      color: white;
-      font-weight: 600;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn-cta:hover {
-      background: #00ff88;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HearHut</title>
+<link rel="stylesheet" href="style.css">
 
-    /* CATEGORIES */
-    .categories {
-      padding: 60px 20px;
-      text-align: center;
-      background: #f5f7fa;
-    }
-    .categories h2 {
-      margin-bottom: 30px;
-      font-size: 2rem;
-    }
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .category-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s;
-    }
-    .category-card:hover {
-      transform: translateY(-5px);
-    }
-    .category-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-  </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="logo">
-      <div class="nav-links">
-        <div class="hearhut-logo">
-          <i class="fas fa-headphones-alt"></i>
-          <span>Hear<span class="highlight">Hut</span></span>
-        </div>
-        <div class="searchbar">
-          <i class="fas fa-search" id="searchBtn"></i>
-          <input type="text" class="input" id="searchInput" placeholder="Search products....">
-          <a href="signin.html" class="bar">Sign in</a>
-        </div>
+<nav class="navbar">
+<div class="logo">
+<div class="nav-links">
+<div class="hearhut-logo">
+<i class="fas fa-headphones-alt"></i>
+<span>Hear<span class="highlight">Hut</span></span>
+</div>
+<div class="searchbar">
+<i class="fas fa-search" id="searchBtn"></i>
+  <input type="text" class="input" id="searchInput" placeholder="Search products....">
+  <a href="signin.html" class="bar">Sign in</a>
+</div>
 
-        <div class="navlinks">
-          <a href="contact.html" class="bar">Contact</a>
-          <a href="" class="bar">About</a>
-          <a href="#" class="bar"><i class="fas fa-shopping-cart"></i></a>
-          <a href="#" class="bar"><i class="fas fa-heart"></i></a>
-          <a href="#" class="bar" id="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
+<div class="navlinks">
 
-  <!-- HERO BANNER -->
-  <div class="hero-banner">
-    <div class="hero-content">
-      <h1>Feel the Beat, Live the Sound 🎧</h1>
-      <p>Discover premium audio gear tailored just for you.</p>
-      <a href="#featured" class="btn-cta">Shop Now</a>
-    </div>
+<a href="contact.html" class="bar">Contact</a>
+<a href="" class="bar">About</a>
+<a href="#" class="bar"><i class="fas fa-shopping-cart"></i></a>
+<a href="#" class="bar"><i class="fas fa-heart"></i></a>
+<a href="#" class="bar" id="cart-icon">
+<i class="fas fa-shopping-cart"></i>
+<span id="cart-count">0</span>
+</a>
+</div>
+</div>
+</div>
+</nav>
+
+
+
+<div class="container">
+<div class="top">
+<div class="text">
+<h4>Your Sound journey starts here</h4>
+<h1 class="a-text delay1">Plug in.</h1>
+<h1 class="a-text delay2">Tune Out</h1>
+<h1 class="a-text delay3">Elevate</h1>
+</div>
+</div>
+</div>
+
+<div class="features">
+<h2 class="feautured">Featured Products</h2>
+<div class="product-grid">
+<div class="product-card" data-name="HyperX Cloud III" data-price="6999" data-id="hyperx-cloud-iii">
+<div class="product-image">
+<img src="images/imag1.png" alt="HyperX Cloud III">
+</div>
+<div class="card">
+<h3>HyperX Cloud III</h3>
+<p>6,999</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="OPPO Enco Air3 Pro" data-price="5500" data-id="oppo-enco-air3-pro">
+<div class="product-image">
+<img src="images/image2.png" alt="OPPO Enco Air3 Pro">
+</div>
+<div class="card">
+<h3>OPPO Enco Air3 Pro</h3>
+<p>5,500</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="OnePlus Nord Buds 3 Pro" data-price="2599" data-id="oneplus-nord-buds-3-pro">
+<div class="product-image">
+<img src="images/image3.png" alt="OnePlus Nord Buds 3 Pro">
+</div>
+<div class="card">
+<h3>OnePlus Nord Buds 3 Pro</h3>
+<p>2,599</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="CMF by Nothing Earbuds" data-price="3990" data-id="cmf-nothing-earbuds">
+<div class="product-image">
+<img src="images/image4.png" alt="CMF by Nothing Earbuds">
+</div>
+<div class="card">
+<h3>CMF by Nothing Earbuds</h3>
+<p>3,990</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="Soundcore by Anker Q20i" data-price="3692" data-id="soundcore-anker-q20i">
+<div class="product-image">
+<img src="images/image5.png" alt="Soundcore by Anker Q20i">
+</div>
+<div class="card">
+<h3>Soundcore by Anker Q20i</h3>
+<p>3,692</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="Mivi SuperPods Immersio" data-price="1999" data-id="mivi-superpods-immersio">
+<div class="product-image">
+<img src="images/image6.png" alt="Mivi SuperPods Immersio">
+</div>
+<div class="card">
+<h3>Mivi SuperPods Immersio</h3>
+<p>1,999</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="Apple AirPods 4" data-price="11499" data-id="apple-airpods-4">
+<div class="product-image">
+<img src="images/image7.png" alt="Apple AirPods 4">
+</div>
+<div class="card">
+<h3>Apple AirPods 4</h3>
+<p>11,499</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+
+<div class="product-card" data-name="Marshall Minor IV" data-price="11999" data-id="marshall-minor-iv">
+<div class="product-image">
+<img src="images/image8.png" alt="Marshall Minor IV">
+</div>
+<div class="card">
+<h3>Marshall Minor IV</h3>
+<p>11,999</p>
+<div class="star">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+<i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<a href="#" class="add-to-cart">
+<i class="fas fa-shopping-cart"></i>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="search-results" style="display:none; margin-top:40px;">
+  <h2>Search Results</h2>
+  <div class="product-grid" id="resultsGrid"></div>
+</div>
+
+
+<div class="banner">
+<span>🎉 Mega Sale! Up to 30% Off on All Headphones – Limited Time! 🎧</span>
+<button class="banner-btn">Grab Now</button>
+</div>
+
+<footer class="footer">
+<div class="footer-container">
+<div class="footer-column">
+<h3>HearHut</h3>
+<p>Premium headphones, earbuds, and audio gear to elevate your sound journey.</p>
+</div>
+
+<div class="footer-column">
+<h3>Quick Links</h3>
+<ul>
+<li><a href="#">Shop</a></li>
+<li><a href="#">Contact</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">FAQ</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<h3>Follow Us</h3>
+<div class="social-icons">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-youtube"></i></a>
+</div>
+</div>
+<div class="footer-column">
+<h3>Newsletter</h3>
+<p>Subscribe to get the latest updates and offers.</p>
+<form>
+<input type="email" placeholder="Your email" required>
+<button type="submit">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="footer-bottom">
+<p>&copy; 2025 HearHut. All rights reserved.</p>
+</div>
+</footer>
+
+<script src="script.js"></script>
+<!-- Cart Popup -->
+<div id="cart-popup" class="cart-popup" style="display:none;">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <button id="close-cart">&times;</button>
   </div>
-
-  <!-- HERO TEXT (existing animated text) -->
-  <div class="container">
-    <div class="top">
-      <div class="text">
-        <h4>Your Sound journey starts here</h4>
-        <h1 class="a-text delay1">Plug in.</h1>
-        <h1 class="a-text delay2">Tune Out</h1>
-        <h1 class="a-text delay3">Elevate</h1>
-      </div>
-    </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer">
+    <h3>Total: ₹<span id="cart-total">0</span></h3>
   </div>
+</div>
 
-  <!-- FEATURED PRODUCTS -->
-  <div class="features" id="featured">
-    <h2 class="feautured">Featured Products</h2>
-    <div class="product-grid">
-      <!-- your product cards (unchanged) -->
-      <!-- ... existing product-card divs ... -->
-    </div>
-  </div>
-
-  <!-- SEARCH RESULTS -->
-  <div class="search-results" style="display:none; margin-top:40px;">
-    <h2>Search Results</h2>
-    <div class="product-grid" id="resultsGrid"></div>
-  </div>
-
-  <!-- CATEGORIES -->
-  <div class="categories">
-    <h2>Shop by Category</h2>
-    <div class="category-grid">
-      <div class="category-card">
-        <img src="images/headphones.jpg" alt="Headphones">
-        <h3>Headphones</h3>
-      </div>
-      <div class="category-card">
-        <img src="images/earbuds.jpg" alt="Earbuds">
-        <h3>Earbuds</h3>
-      </div>
-      <div class="category-card">
-        <img src="images/speakers.jpg" alt="Speakers">
-        <h3>Speakers</h3>
-      </div>
-    </div>
-  </div>
-
-  <!-- BANNER -->
-  <div class="banner">
-    <span>🎉 Mega Sale! Up to 30% Off on All Headphones – Limited Time! 🎧</span>
-    <button class="banner-btn">Grab Now</button>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-container">
-      <div class="footer-column">
-        <h3>HearHut</h3>
-        <p>Premium headphones, earbuds, and audio gear to elevate your sound journey.</p>
-      </div>
-      <div class="footer-column">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Follow Us</h3>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
-      <div class="footer-column">
-        <h3>Newsletter</h3>
-        <p>Subscribe to get the latest updates and offers.</p>
-        <form>
-          <input type="email" placeholder="Your email" required>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 HearHut. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- CART POPUP -->
-  <div id="cart-popup" class="cart-popup" style="display:none;">
-    <div class="cart-header">
-      <h2>Your Cart</h2>
-      <button id="close-cart">&times;</button>
-    </div>
-    <div class="cart-items" id="cart-items"></div>
-    <div class="cart-footer">
-      <h3>Total: ₹<span id="cart-total">0</span></h3>
-    </div>
-  </div>
-
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // LOGIN HANDLING
-      const storedEmail = localStorage.getItem('userEmail');
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
-
-      if (isLoggedIn && storedEmail && signInLink) {
-        const username = storedEmail.split('@')[0];
-        const userDiv = document.createElement('div');
-        userDiv.classList.add('user-info');
-        userDiv.style.display = 'flex';
-        userDiv.style.alignItems = 'center';
-        userDiv.style.gap = '8px';
-
-        const welcomeSpan = document.createElement('span');
-        welcomeSpan.textContent = `Welcome, ${username}!`;
-        welcomeSpan.style.color = '#fff';
-        welcomeSpan.style.fontWeight = '500';
-        welcomeSpan.style.fontSize = '14px';
-
-        const logoutBtn = document.createElement('button');
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.classList.add('logout-btn');
-
-        logoutBtn.addEventListener('click', () => {
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('userEmail');
-          localStorage.removeItem('userPassword');
-          window.location.reload();
-        });
-
-        userDiv.appendChild(welcomeSpan);
-        userDiv.appendChild(logoutBtn);
-        signInLink.replaceWith(userDiv);
-      }
-
-      // SEARCH FUNCTIONALITY
-      const searchInput = document.getElementById('searchInput');
-      const searchBtn = document.getElementById('searchBtn');
-      const featuredSection = document.querySelector('.features');
-      const resultsSection = document.querySelector('.search-results');
-      const resultsGrid = document.getElementById('resultsGrid');
-
-      resultsSection.style.display = 'none';
-
-      const originalCards = Array.from(document.querySelectorAll('.features .product-card')).map(card => card.cloneNode(true));
-
-      function performSearch() {
-        const query = searchInput.value.toLowerCase().trim();
-
-        if (!query) {
-          featuredSection.style.display = 'block';
-          resultsSection.style.display = 'none';
-          return;
-        }
-
-        featuredSection.style.display = 'none';
-        resultsSection.style.display = 'block';
-        resultsGrid.innerHTML = '';
-
-        let hasResults = false;
-
-        originalCards.forEach(card => {
-          if (card.getAttribute('data-name').toLowerCase().includes(query)) {
-            resultsGrid.appendChild(card.cloneNode(true));
-            hasResults = true;
-          }
-        });
-
-        if (!hasResults) {
-          resultsGrid.innerHTML = '<p>No products found.</p>';
-        }
-
-        const backBtn = document.createElement('button');
-        backBtn.textContent = '⬅ Back to Featured';
-        backBtn.classList.add('back-btn');
-        backBtn.style.marginTop = '15px';
-        backBtn.style.padding = '8px 16px';
-        backBtn.style.border = 'none';
-        backBtn.style.borderRadius = '8px';
-        backBtn.style.background = '#0072ff';
-        backBtn.style.color = '#fff';
-        backBtn.style.cursor = 'pointer';
-
-        backBtn.addEventListener('click', () => {
-          searchInput.value = '';
-          featuredSection.style.display = 'block';
-          resultsSection.style.display = 'none';
-        });
-
-        resultsGrid.appendChild(backBtn);
-      }
-
-      searchInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          performSearch();
-        }
-      });
-
-      searchBtn.addEventListener('click', e => {
-        e.preventDefault();
-        performSearch();
-      });
-
-      // Smooth scroll for "Shop Now" button
-      document.querySelector('.btn-cta').addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector('#featured').scrollIntoView({ behavior: 'smooth' });
-      });
-    });
-  </script>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // LOGIN HANDLING
+  const storedEmail = localStorage.getItem('userEmail');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
+
+  if (isLoggedIn && storedEmail && signInLink) {
+    const username = storedEmail.split('@')[0];
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user-info');
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    userDiv.style.gap = '8px';
+
+    const welcomeSpan = document.createElement('span');
+    welcomeSpan.textContent = `Welcome, ${username}!`;
+    welcomeSpan.style.color = '#fff';
+    welcomeSpan.style.fontWeight = '500';
+    welcomeSpan.style.fontSize = '14px';
+
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.classList.add('logout-btn');
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userPassword');
+      window.location.reload();
+    });
+
+    userDiv.appendChild(welcomeSpan);
+    userDiv.appendChild(logoutBtn);
+    signInLink.replaceWith(userDiv);
+  }
+
+  // SEARCH FUNCTIONALITY
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const featuredSection = document.querySelector('.features');
+  const resultsSection = document.querySelector('.search-results');
+  const resultsGrid = document.getElementById('resultsGrid');
+
+  resultsSection.style.display = 'none'; // hide initially
+
+  // Store original cards as nodes for cloning
+  const originalCards = Array.from(document.querySelectorAll('.features .product-card')).map(card => card.cloneNode(true));
+
+  function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+
+    if (!query) {
+      featuredSection.style.display = 'block';
+      resultsSection.style.display = 'none';
+      return;
+    }
+
+    featuredSection.style.display = 'none';
+    resultsSection.style.display = 'block';
+    resultsGrid.innerHTML = '';
+
+    let hasResults = false;
+
+    originalCards.forEach(card => {
+      if (card.getAttribute('data-name').toLowerCase().includes(query)) {
+        resultsGrid.appendChild(card.cloneNode(true));
+        hasResults = true;
+      }
+    });
+
+    if (!hasResults) {
+      resultsGrid.innerHTML = '<p>No products found.</p>';
+    }
+
+    // Back button
+    const backBtn = document.createElement('button');
+    backBtn.textContent = '⬅ Back to Featured';
+    backBtn.classList.add('back-btn');
+    backBtn.style.marginTop = '15px';
+    backBtn.style.padding = '8px 16px';
+    backBtn.style.border = 'none';
+    backBtn.style.borderRadius = '8px';
+    backBtn.style.background = '#0072ff';
+    backBtn.style.color = '#fff';
+    backBtn.style.cursor = 'pointer';
+
+    backBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      featuredSection.style.display = 'block';
+      resultsSection.style.display = 'none';
+    });
+
+    resultsGrid.appendChild(backBtn);
+  }
+
+  // Trigger search only on Enter
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      performSearch();
+    }
+  });
+
+  // Trigger search on clicking search icon
+  searchBtn.addEventListener('click', e => {
+    e.preventDefault();
+    performSearch();
+  });
+});
+</script>
+
+
+
+
+
 </html>
