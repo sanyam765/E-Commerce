@@ -9,6 +9,186 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* Enhanced Product Card Styles for Index.html */
+.product-card .brand-name {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+
+.product-card .star-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.product-card .stars {
+  color: var(--star-color);
+  font-size: 14px;
+}
+
+.product-card .review-count {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.product-card .price-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.product-card .current-price {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.product-card .original-price {
+  color: var(--text-muted);
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+.product-card .color-options {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.product-card .color-option {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.product-card .color-option:hover {
+  transform: scale(1.2);
+}
+
+.product-card .add-to-cart {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+    background: #005ecc;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  width: 100%;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.product-card .add-to-cart:hover {
+  background: #3a94fa;
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: white;
+}
+
+/* Hero Shop Now Button Styles */
+.hero-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  animation: fadeInUp 1s ease-out 2s both;
+}
+
+.shop-now-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+ background: #005ecc;
+  color: white;
+  padding: 18px 36px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 25px rgba(0, 114, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.shop-now-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.shop-now-btn:hover::before {
+  left: 100%;
+}
+
+.shop-now-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4), 0 5px 15px rgba(0, 255, 136, 0.3);
+  background: linear-gradient(135deg, #005ecc, #00cc7a);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.shop-now-btn:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.shop-now-btn i {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.shop-now-btn:hover i {
+  transform: rotate(15deg) scale(1.1);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments for the button */
+@media (max-width: 768px) {
+  .shop-now-btn {
+    padding: 16px 28px;
+    font-size: 16px;
+  }
+  
+  .hero-button {
+    margin-top: 30px;
+  }
+}
+</style>
 </head>
 
 <body>
@@ -51,6 +231,12 @@
 <h1 class="a-text delay2">Tune Out</h1>
 <h1 class="a-text delay3">Elevate</h1>
 </div>
+<div class="hero-button">
+<a href="shop.html" class="shop-now-btn">
+<i class="fas fa-shopping-bag"></i>
+Shop Now
+</a>
+</div>
 </div>
 </div>
 
@@ -62,14 +248,23 @@
 <img src="images/imag1.png" alt="HyperX Cloud III">
 </div>
 <div class="card">
+<div class="brand-name">HyperX</div>
 <h3>HyperX Cloud III</h3>
-<p>6,999</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★★</div>
+<span class="review-count">(342)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹6,999</span>
+<span class="original-price">₹8,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #ffffff"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -79,14 +274,23 @@
 <img src="images/image2.png" alt="OPPO Enco Air3 Pro">
 </div>
 <div class="card">
+<div class="brand-name">OPPO</div>
 <h3>OPPO Enco Air3 Pro</h3>
-<p>5,500</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★★</div>
+<span class="review-count">(156)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹5,500</span>
+<span class="original-price">₹6,500</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #007AFF"></div>
+<div class="color-option" style="background-color: #FF3B30"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -96,14 +300,23 @@
 <img src="images/image3.png" alt="OnePlus Nord Buds 3 Pro">
 </div>
 <div class="card">
+<div class="brand-name">OnePlus</div>
 <h3>OnePlus Nord Buds 3 Pro</h3>
-<p>2,599</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★★</div>
+<span class="review-count">(89)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹2,599</span>
+<span class="original-price">₹3,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #FF6B35"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -113,14 +326,23 @@
 <img src="images/image4.png" alt="CMF by Nothing Earbuds">
 </div>
 <div class="card">
+<div class="brand-name">Nothing</div>
 <h3>CMF by Nothing Earbuds</h3>
-<p>3,990</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★☆</div>
+<span class="review-count">(234)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹3,990</span>
+<span class="original-price">₹4,990</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #ffffff"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -130,14 +352,23 @@
 <img src="images/image5.png" alt="Soundcore by Anker Q20i">
 </div>
 <div class="card">
+<div class="brand-name">Soundcore</div>
 <h3>Soundcore by Anker Q20i</h3>
-<p>3,692</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★☆</div>
+<span class="review-count">(567)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹3,692</span>
+<span class="original-price">₹4,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #4A90E2"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -147,14 +378,23 @@
 <img src="images/image6.png" alt="Mivi SuperPods Immersio">
 </div>
 <div class="card">
+<div class="brand-name">Mivi</div>
 <h3>Mivi SuperPods Immersio</h3>
-<p>1,999</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★☆</div>
+<span class="review-count">(123)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹1,999</span>
+<span class="original-price">₹2,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #FF6B6B"></div>
+<div class="color-option" style="background-color: #4ECDC4"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -164,14 +404,23 @@
 <img src="images/image7.png" alt="Apple AirPods 4">
 </div>
 <div class="card">
+<div class="brand-name">Apple</div>
 <h3>Apple AirPods 4</h3>
-<p>11,499</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★★</div>
+<span class="review-count">(892)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹11,499</span>
+<span class="original-price">₹12,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #ffffff"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
@@ -181,14 +430,23 @@
 <img src="images/image8.png" alt="Marshall Minor IV">
 </div>
 <div class="card">
+<div class="brand-name">Marshall</div>
 <h3>Marshall Minor IV</h3>
-<p>11,999</p>
-<div class="star">
-<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-<i class="fas fa-star"></i><i class="fas fa-star"></i>
+<div class="star-rating">
+<div class="stars">★★★★★</div>
+<span class="review-count">(445)</span>
+</div>
+<div class="price-section">
+<span class="current-price">₹11,999</span>
+<span class="original-price">₹13,999</span>
+</div>
+<div class="color-options">
+<div class="color-option" style="background-color: #000000"></div>
+<div class="color-option" style="background-color: #8B4513"></div>
 </div>
 <a href="#" class="add-to-cart">
 <i class="fas fa-shopping-cart"></i>
+Add to Cart
 </a>
 </div>
 </div>
