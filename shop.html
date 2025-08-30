@@ -165,7 +165,7 @@
 }
 
 .product-card {
-  background: var(--bg-light);
+  background-color: white;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.06);
@@ -181,15 +181,20 @@
 .product-image {
   position: relative;
   overflow: hidden;
-  height: 250px;
+  height: 250px;   /* keep card height consistent */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ /* light bg to fill gaps if image is smaller */
 }
 
 .product-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;  /* ensures full image is visible */
   transition: transform 0.3s ease;
 }
+
 
 .product-card:hover .product-image img {
   transform: scale(1.05);
@@ -706,7 +711,7 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 678,
-    image: "images/bgm.png",
+    image: "images/",
     colors: ["#000000", "#4A90E2", "#FF6B6B"],
     description: "Portable Bluetooth speaker with powerful bass"
   },
@@ -720,7 +725,7 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 456,
-    image: "images/image copy.png",
+    image: "images/",
     colors: ["#000000", "#FF6B6B", "#4A90E2"],
     description: "Extra bass portable speaker with party lights"
   },
@@ -734,7 +739,7 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 789,
-    image: "images/image.png",
+    image: "images/",
     colors: ["#000000", "#8B4513"],
     description: "360-degree sound with deep bass"
   },
@@ -748,7 +753,7 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 1234,
-    image: "images/image copy.png",
+    image: "images/",
     colors: ["#000000", "#FF6B6B", "#4A90E2"],
     description: "Advanced smartwatch with health monitoring"
   },
@@ -762,7 +767,7 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 567,
-    image: "images/image2.png",
+    image: "images/",
     colors: ["#000000", "#4A90E2", "#FF6B6B"],
     description: "Android smartwatch with fitness tracking"
   },
@@ -776,7 +781,7 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 234,
-    image: "images/image3.png",
+    image: "images/",
     colors: ["#000000", "#8B4513"],
     description: "Premium multisport GPS watch"
   }
@@ -1038,6 +1043,102 @@ document.addEventListener('click', (e) => {
     cartPopup.style.display = 'none';
   }
 });
+// ---- STATE ----
+
+let searchQuery = "";   // ✅ NEW
+
+// ---- INIT ----
+document.addEventListener('DOMContentLoaded', () => {
+  displayProducts();
+  updateCartCount();
+  renderCart();
+
+  // ✅ Search event listeners
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+
+  // Press Enter
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      searchQuery = searchInput.value.trim();
+      displayProducts();
+    }
+  });
+
+  // Click Search Icon
+  searchBtn.addEventListener('click', () => {
+    searchQuery = searchInput.value.trim();
+    displayProducts();
+  });
+
+  // ✅ Login handling (keep just one copy)
+  const storedEmail = localStorage.getItem('userEmail');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
+  if (isLoggedIn && storedEmail && signInLink) {
+    const username = storedEmail.split('@')[0];
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user-info');
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    userDiv.style.gap = '8px';
+
+    const welcomeSpan = document.createElement('span');
+    welcomeSpan.textContent = `Welcome, ${username}!`;
+    welcomeSpan.style.color = '#fff';
+    welcomeSpan.style.fontWeight = '500';
+    welcomeSpan.style.fontSize = '14px';
+
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.classList.add('logout-btn');
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userPassword');
+      window.location.reload();
+    });
+
+    userDiv.appendChild(welcomeSpan);
+    userDiv.appendChild(logoutBtn);
+    signInLink.replaceWith(userDiv);
+  }
+});
+
+// ---- DISPLAY ----
+function displayProducts() {
+  let filteredProducts = filterProducts();
+  let sortedProducts = sortProducts(filteredProducts);
+
+  productsCount.textContent = `${filteredProducts.length} products found`;
+  productGrid.innerHTML = '';
+
+  sortedProducts.forEach(product => {
+    const productCard = createProductCard(product);
+    productGrid.appendChild(productCard);
+  });
+}
+
+// ---- FILTER ----
+function filterProducts() {
+  let result = (currentCategory === 'all')
+    ? productsData
+    : productsData.filter(product => product.category === currentCategory);
+
+  // ✅ Apply search filter
+  if (searchQuery !== "") {
+    const q = searchQuery.toLowerCase();
+    result = result.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.brand.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q)
+    );
+  }
+
+  return result;
+}
+
 </script>
 
 </body>
