@@ -1,96 +1,166 @@
+// Only redirect when user actually clicks the card, not the add-to-cart button
 const products = document.querySelectorAll(".product-card")
 products.forEach(product=>{
-  product.addEventListener("click",()=>{
-const name = product.getAttribute('data-name')
-const price = product.getAttribute('data-price')
-const id = product.getAttribute('data-id')
-const image = product.querySelector("img").getAttribute("src")
-const selectedProduct = { name, price, id, image };
+  product.addEventListener("click",(e)=>{
+    // Stop if clicked on add-to-cart button
+    if(e.target.closest('.add-to-cart')) return;
 
-      
-      localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
+    const name = product.getAttribute('data-name')
+    const price = product.getAttribute('data-price')
+    const id = product.getAttribute('data-id')
+    const image = product.querySelector("img").getAttribute("src")
+    const selectedProduct = { name, price, id, image };
+          
+    localStorage.setItem("selectedProduct", JSON.stringify(selectedProduct));
 
-      window.location.href = "product.html";
+    // Comment out or remove this if you want no redirect
+    // window.location.href = "product.html";
   })
 })
 
-const searchInput = document.getElementById("searchInput");
-const resultsDiv = document.querySelector(".search-results");
-const resultsGrid = document.getElementById("resultsGrid");
-const productCards = document.querySelectorAll(".product-card");
 
-// Live search
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
 
-  if (query.trim() === "") {
-    resultsDiv.style.display = "none"; // hide results
-    document.querySelector(".features").style.display = "block"; // show main grid
-    return;
+
+document.addEventListener('DOMContentLoaded', () => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const cartCount = document.getElementById("cart-count");
+  const cartIcon = document.getElementById("cart-icon");
+  const cartPopup = document.getElementById("cart-popup");
+  const cartItemsContainer = document.getElementById("cart-items");
+  const cartTotal = document.getElementById("cart-total");
+  const closeCartBtn = document.getElementById("close-cart");
+
+  function updateCartCounter() {
+    cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  resultsGrid.innerHTML = ""; // clear old results
-  let found = false;
+  function renderCart() {
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
 
-  productCards.forEach(card => {
-    const name = card.getAttribute("data-name").toLowerCase();
+    cart.forEach(item => {
+      total += item.price * item.quantity;
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <span>${item.name} x ${item.quantity}</span>
+        <span>₹${item.price * item.quantity}
+          <button class="remove-item" data-id="${item.id}">Remove</button>
+        </span>
+      `;
+      cartItemsContainer.appendChild(div);
+    });
 
-    if (name.includes(query)) {
-      found = true;
-      const clone = card.cloneNode(true); // copy product
-      resultsGrid.appendChild(clone);
-    }
-  });
+    cartTotal.innerText = total;
 
-  if (found) {
-    resultsDiv.style.display = "block";  // show results section
-    document.querySelector(".features").style.display = "none"; // hide main grid
-  } else {
-    resultsDiv.innerHTML = "<p>No products found</p>";
-    resultsDiv.style.display = "block";
-    document.querySelector(".features").style.display = "none";
+    document.querySelectorAll('.remove-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        cart = cart.filter(p => p.id !== id);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCounter();
+        renderCart();
+      });
+    });
   }
-});
 
-
-// Cart array (load from localStorage if available)
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-// Update cart counter on load
-document.getElementById("cart-count").innerText = cart.length;
-
-// Select all "Add to Cart" buttons
-const addToCartButtons = document.querySelectorAll(".add-to-cart");
-
-addToCartButtons.forEach(button => {
-  button.addEventListener("click", (event) => {
-    event.preventDefault(); // stop page reload if <a href="#">
-    
-    // Find product card
-    const productCard = button.closest(".product-card");
-    
-    // Get product details from data attributes
+  function addToCart(productCard) {
     const product = {
-      id: productCard.getAttribute("data-id"),
-      name: productCard.getAttribute("data-name"),
-      price: parseInt(productCard.getAttribute("data-price")),
+      id: productCard.getAttribute('data-id'),
+      name: productCard.getAttribute('data-name'),
+      price: parseInt(productCard.getAttribute('data-price')),
       quantity: 1
     };
 
-    // Check if already in cart
-    const existingProduct = cart.find(item => item.id === product.id);
-    if (existingProduct) {
-      existingProduct.quantity += 1; // increase quantity
-    } else {
-      cart.push(product); // add new product
+    const existing = cart.find(p => p.id === product.id);
+    if (existing) existing.quantity += 1;
+    else cart.push(product);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCounter();
+    renderCart();
+  }
+
+  document.querySelectorAll(".add-to-cart").forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      const card = btn.closest(".product-card");
+      addToCart(card);
+    });
+  });
+
+  updateCartCounter();
+  renderCart();
+
+  cartIcon.addEventListener('click', e => {
+    e.preventDefault();
+    cartPopup.style.display = cartPopup.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  closeCartBtn.addEventListener('click', () => cartPopup.style.display = 'none');
+
+  // ------------------------
+  // SEARCH FUNCTIONALITY
+  // ------------------------
+  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const featuredSection = document.querySelector('.features');
+  const resultsSection = document.querySelector('.search-results');
+  const resultsGrid = document.getElementById('resultsGrid');
+
+  resultsSection.style.display = 'none';
+  const originalCards = Array.from(document.querySelectorAll('.features .product-card')).map(c => c.cloneNode(true));
+
+  function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    if (!query) {
+      featuredSection.style.display = 'block';
+      resultsSection.style.display = 'none';
+      return;
     }
 
-    // Save to localStorage
-    localStorage.setItem("cart", JSON.stringify(cart));
+    featuredSection.style.display = 'none';
+    resultsSection.style.display = 'block';
+    resultsGrid.innerHTML = '';
 
-    // Update counter
-    document.getElementById("cart-count").innerText = cart.length;
-  });
+    let hasResults = false;
+    originalCards.forEach(card => {
+      if (card.getAttribute('data-name').toLowerCase().includes(query)) {
+        resultsGrid.appendChild(card.cloneNode(true));
+        hasResults = true;
+      }
+    });
+
+    if (!hasResults) resultsGrid.innerHTML = '<p>No products found.</p>';
+
+    const backBtn = document.createElement('button');
+    backBtn.textContent = '⬅ Back to Featured';
+    backBtn.style.marginTop = '10px';
+    backBtn.style.padding = '6px 12px';
+    backBtn.style.background = '#0072ff';
+    backBtn.style.color = '#fff';
+    backBtn.style.border = 'none';
+    backBtn.style.borderRadius = '6px';
+    backBtn.style.cursor = 'pointer';
+    backBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      featuredSection.style.display = 'block';
+      resultsSection.style.display = 'none';
+    });
+
+    resultsGrid.appendChild(backBtn);
+
+    // Reattach add-to-cart listeners for search results
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const card = btn.closest('.product-card');
+        addToCart(card);
+      });
+    });
+  }
+
+  searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(); });
+  searchBtn.addEventListener('click', performSearch);
 });
-
 
