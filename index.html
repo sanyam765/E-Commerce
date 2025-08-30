@@ -254,4 +254,49 @@
 <script src="script.js"></script>
 
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const storedEmail = localStorage.getItem('userEmail');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+  const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
+
+  if (isLoggedIn && storedEmail && signInLink) {
+    const username = storedEmail.split('@')[0];
+
+    // Create a wrapper div to hold welcome + logout
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user-info'); // add a class for styling
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    userDiv.style.gap = '8px'; // space between name & button
+
+    // Welcome message
+    const welcomeSpan = document.createElement('span');
+    welcomeSpan.textContent = `Welcome, ${username}!`;
+    welcomeSpan.style.color = '#fff';
+    welcomeSpan.style.fontWeight = '500';
+    welcomeSpan.style.fontSize = '14px';
+
+    // Logout button
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.classList.add('logout-btn');
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userPassword');
+      window.location.reload();
+    });
+
+    userDiv.appendChild(welcomeSpan);
+    userDiv.appendChild(logoutBtn);
+
+    signInLink.replaceWith(userDiv);
+  }
+});
+
+</script>
+
 </html>
