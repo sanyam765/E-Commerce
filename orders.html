@@ -374,6 +374,33 @@
   </style>
 </head>
 <body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="nav-links">
+        <div class="hearhut-logo">
+          <i class="fas fa-headphones-alt"></i>
+          <span>Hear<span class="highlight">Hut</span></span>
+        </div>
+        <div class="searchbar">
+          <i class="fas fa-search" id="searchBtn"></i>
+          <input type="text" class="input" id="searchInput" placeholder="Search products....">
+          <a href="signin.html" class="bar">Sign in</a>
+        </div>
+        <div class="navlinks">
+          <a href="index.html" class="bar">Home</a>
+          <a href="shop.html" class="bar">Shop</a>
+          <a href="contact.html" class="bar">Contact</a>
+          <a href="about.html" class="bar">About</a>
+          <a href="cart.html" class="bar" id="cart-icon">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   <div class="orders-container">
     <div class="orders-header">
       <div class="icon">
@@ -552,6 +579,84 @@
     document.addEventListener('DOMContentLoaded', () => {
       displayOrderStats();
       displayOrders();
+      updateCartCount();
+      
+      // Login handling
+      const storedEmail = localStorage.getItem('userEmail');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
+
+      if (isLoggedIn && storedEmail && signInLink) {
+        const username = storedEmail.split('@')[0];
+        const userDiv = document.createElement('div');
+        userDiv.classList.add('user-info');
+        userDiv.style.display = 'flex';
+        userDiv.style.alignItems = 'center';
+        userDiv.style.gap = '8px';
+
+        const welcomeSpan = document.createElement('span');
+        welcomeSpan.textContent = `Welcome, ${username}!`;
+        welcomeSpan.style.color = '#fff';
+        welcomeSpan.style.fontWeight = '500';
+        welcomeSpan.style.fontSize = '14px';
+
+        const logoutBtn = document.createElement('button');
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.classList.add('logout-btn');
+        logoutBtn.style.cssText = `
+          background: rgba(255,255,255,0.2);
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 12px;
+        `;
+
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('isLoggedIn');
+          localStorage.removeItem('userEmail');
+          localStorage.removeItem('userPassword');
+          window.location.reload();
+        });
+
+        userDiv.appendChild(welcomeSpan);
+        userDiv.appendChild(logoutBtn);
+        signInLink.replaceWith(userDiv);
+      }
+    });
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    function updateCartCount() {
+      const cartCount = document.getElementById('cart-count');
+      if (cartCount) {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+      }
+    }
+
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    searchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const query = searchInput.value.trim();
+      if (query) {
+        window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+      }
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const query = searchInput.value.trim();
+        if (query) {
+          window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+        }
+      }
     });
   </script>
 </body>

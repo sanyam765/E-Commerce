@@ -18,11 +18,58 @@
 
     body {
       font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0077ff 0%, #00c6ff 100%);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .hearhut-logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .main-content {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #0077ff 0%, #00c6ff 100%);
+      min-height: 100vh;
+      padding-top: 80px;
     }
 
     .container {
@@ -138,7 +185,24 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="hearhut-logo">
+        <i class="fas fa-headphones-alt"></i>
+        HearHut
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+        <a href="signin.html">Sign In</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="container">
     <div class="logo">
       <i class="fas fa-headphones-alt"></i> HearHut
     </div>
@@ -154,12 +218,47 @@
       <button type="submit" class="btn">Sign Up</button>
     </form>
 
-    <div class="extras">
-      <p>Already have an account? <a href="sign-in.html">Sign In</a></p>
+      <div class="extras">
+        <p>Already have an account? <a href="signin.html">Sign In</a></p>
+      </div>
     </div>
   </div>
 
   <script>
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function updateCartCount() {
+  const cartCount = document.getElementById('cart-count');
+  if (cartCount) {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+  }
+}
+
+// Initialize cart count
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  
+  // Login handling
+  const storedEmail = localStorage.getItem('userEmail');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const signInLink = document.querySelector('.nav-links a[href="signin.html"]');
+
+  if (isLoggedIn && storedEmail && signInLink) {
+    const username = storedEmail.split('@')[0];
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user-info');
+    userDiv.style.cssText = `
+      color: white;
+      font-weight: 500;
+      font-size: 14px;
+    `;
+    userDiv.textContent = `Welcome, ${username}!`;
+    signInLink.replaceWith(userDiv);
+  }
+});
+
 const signupForm = document.getElementById('signupForm');
 
 signupForm.addEventListener('submit', function(e){
@@ -194,8 +293,6 @@ signupForm.addEventListener('submit', function(e){
   alert('Account created! You can now sign in.');
   window.location.href = 'signin.html';
 });
-
-
   </script>
 </body>
 </html>

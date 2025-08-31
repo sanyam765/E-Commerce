@@ -3,18 +3,1004 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details</title>
+    <title>Product Details - HearHut</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .product-details { max-width: 400px; margin: auto; text-align: center; }
-    img { width: 100%; border-radius: 10px; }
+    body {
+        background: #f5f7fa;
+    }
+    .product-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 32px 24px;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .product-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 48px;
+        margin-top: 24px;
+    }
+    .product-images {
+        flex: 1 1 340px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #f8fafc;
+        border-radius: 16px;
+        padding: 32px 16px 24px 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        min-width: 320px;
+        max-width: 420px;
+    }
+    .main-image {
+        width: 100%;
+        max-width: 320px;
+        max-height: 320px;
+        aspect-ratio: 1/1;
+        object-fit: contain;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        border: 1.5px solid #e9ecef;
+        padding: 18px;
+        margin-bottom: 18px;
+        transition: box-shadow 0.2s;
+    }
+    .main-image:hover {
+        box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+    }
+    .thumbnail-images {
+        display: flex;
+        gap: 8px;
+        margin-top: 0;
+    }
+    .thumbnail {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 2px solid #e9ecef;
+        background: #fff;
+        transition: border 0.2s, box-shadow 0.2s;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        padding: 4px;
+    }
+    .thumbnail.active, .thumbnail:hover {
+        border-color: var(--primary-color);
+        box-shadow: 0 2px 8px rgba(0,114,255,0.10);
+    }
+    .product-info {
+        flex: 2 1 400px;
+        padding: 0 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .brand-name {
+        color: var(--text-muted);
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+    .product-title {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 18px;
+        line-height: 1.15;
+    }
+    .rating-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+    .stars {
+        color: var(--star-color);
+        font-size: 1.2rem;
+    }
+    .review-count {
+        color: var(--text-muted);
+        font-size: 1rem;
+    }
+    .price-section {
+        margin-bottom: 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .current-price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+    .original-price {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        text-decoration: line-through;
+    }
+    .discount-badge {
+        background: var(--sale-color);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 16px;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: 8px;
+    }
+    .color-section {
+        margin-bottom: 18px;
+    }
+    .color-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-color);
+    }
+    .color-options {
+        display: flex;
+        gap: 10px;
+    }
+    .color-option {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        cursor: pointer;
+        transition: transform 0.2s, border 0.2s;
+    }
+    .color-option.selected, .color-option:hover {
+        transform: scale(1.18);
+        border-color: var(--primary-color);
+    }
+    .quantity-section {
+        margin-bottom: 18px;
+    }
+    .quantity-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--text-color);
+    }
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .quantity-btn {
+        width: 36px;
+        height: 36px;
+        border: 2px solid var(--border-color);
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .quantity-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    .quantity-input {
+        width: 48px;
+        height: 36px;
+        text-align: center;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    .add-to-cart-btn {
+        flex: 2;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 13px 0;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .add-to-cart-btn:hover {
+        background: #005ecc;
+        transform: translateY(-2px);
+    }
+    .wishlist-btn {
+        width: 44px;
+        height: 44px;
+        border: 2px solid var(--border-color);
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .wishlist-btn:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    .wishlist-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+    .product-description {
+        margin-top: 32px;
+        padding: 24px;
+        background: #f8fafc;
+        border-radius: 12px;
+    }
+    .description-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-color);
+    }
+    .description-text {
+        line-height: 1.6;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+    }
+    .specifications {
+        margin-top: 32px;
+    }
+    .specs-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-color);
+    }
+    .specs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+    .spec-item {
+        padding: 14px;
+        background: #f8fafc;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-color);
+    }
+    .spec-label {
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 3px;
+    }
+    .spec-value {
+        color: var(--text-muted);
+    }
+    .related-products {
+        margin-top: 48px;
+    }
+    .related-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        color: var(--text-color);
+        text-align: center;
+    }
+    .related-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 18px;
+    }
+    .loading {
+        text-align: center;
+        padding: 60px;
+        font-size: 1.1rem;
+        color: var(--text-muted);
+    }
+    .error {
+        text-align: center;
+        padding: 60px;
+        color: var(--sale-color);
+        font-size: 1.1rem;
+    }
+    @media (max-width: 900px) {
+        .product-details {
+            flex-direction: column;
+            gap: 32px;
+        }
+        .product-images, .product-info {
+            max-width: 100%;
+        }
+    }
+    @media (max-width: 600px) {
+        .product-container {
+            padding: 10px 2vw;
+        }
+        .main-image {
+            max-width: 90vw;
+            max-height: 60vw;
+            padding: 8px;
+        }
+        .product-title {
+            font-size: 1.3rem;
+        }
+        .current-price {
+            font-size: 1.2rem;
+        }
+    }
   </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container" style="display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 70px;">
+            <div class="hearhut-logo">
+                <i class="fas fa-headphones-alt"></i>
+                <span>Hear<span class="highlight">Hut</span></span>
+            </div>
+            <div class="searchbar" style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-search" id="searchBtn"></i>
+                <input type="text" class="input" id="searchInput" placeholder="Search products....">
+                <a href="signin.html" class="bar">Sign in</a>
+            </div>
+            <div class="navlinks" style="display: flex; align-items: center; gap: 30px;">
+                <a href="index.html" class="bar">Home</a>
+                <a href="shop.html" class="bar">Shop</a>
+                <a href="contact.html" class="bar">Contact</a>
+                <a href="about.html" class="bar">About</a>
+                <a href="cart.html" class="bar" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="product-container">
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Loading product details...
+        </div>
+        
+        <div id="error" class="error" style="display: none;">
+            Product not found or error loading details.
+        </div>
+        
+        <div id="product-content" style="display: none;">
   <div class="product-details">
-    <img id="productImage" src="" alt="">
-    <h2 id="productName"></h2>
-    <p id="productPrice"></p>
-    <button>Add to Cart</button>
+                <div class="product-images">
+                    <img id="main-image" class="main-image" src="" alt="">
+                    <div class="thumbnail-images" id="thumbnail-images">
+                        <!-- Thumbnails will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="brand-name" id="brand-name"></div>
+                    <h1 class="product-title" id="product-title"></h1>
+                    
+                    <div class="rating-section">
+                        <div class="stars" id="stars"></div>
+                        <span class="review-count" id="review-count"></span>
+                    </div>
+                    
+                    <div class="price-section">
+                        <span class="current-price" id="current-price"></span>
+                        <span class="original-price" id="original-price"></span>
+                        <span class="discount-badge" id="discount-badge"></span>
+                    </div>
+                    
+                    <div class="color-section">
+                        <div class="color-label">Select Color:</div>
+                        <div class="color-options" id="color-options">
+                            <!-- Color options will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="quantity-section">
+                        <div class="quantity-label">Quantity:</div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(-1)">-</button>
+                            <input type="number" class="quantity-input" id="quantity-input" value="1" min="1" max="99">
+                            <button class="quantity-btn" onclick="changeQuantity(1)">+</button>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="add-to-cart-btn" id="add-to-cart-btn" onclick="addToCartFromPage()">
+                            <i class="fas fa-shopping-cart"></i>
+                            Add to Cart
+                        </button>
+                        <button class="wishlist-btn" id="wishlist-btn" onclick="toggleWishlist()">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-description">
+                <h2 class="description-title">Product Description</h2>
+                <p class="description-text" id="description-text"></p>
+            </div>
+            
+            <div class="specifications">
+                <h2 class="specs-title">Specifications</h2>
+                <div class="specs-grid" id="specs-grid">
+                    <!-- Specifications will be populated here -->
+                </div>
+            </div>
+            
+            <div class="related-products">
+                <h2 class="related-title">Related Products</h2>
+                <div class="related-grid" id="related-grid">
+                    <!-- Related products will be populated here -->
+                </div>
+            </div>
+        </div>
   </div>
-  <script src="product.js"></script>
+
+    <script>
+        // Product database
+        const products = [
+            {
+                id: "hyperx-cloud-iii",
+                name: "HyperX Cloud III",
+                brand: "HyperX",
+                price: 6999,
+                originalPrice: 8999,
+                discount: 22,
+                category: "headphones",
+                rating: 5,
+                reviews: 342,
+                image: "Images/imag1.png",
+                colors: ["#000000", "#ffffff"],
+                description: "Premium gaming headset with superior sound quality, featuring 53mm drivers for immersive audio experience. Perfect for gaming, music, and professional use with exceptional comfort and durability.",
+                specifications: {
+                    "Driver Size": "53mm",
+                    "Frequency Response": "10Hz - 30kHz",
+                    "Impedance": "32Ω",
+                    "Sensitivity": "118dB",
+                    "Cable Length": "1.8m",
+                    "Weight": "320g",
+                    "Connection": "3.5mm + USB"
+                }
+            },
+            {
+                id: "oppo-enco-air3-pro",
+                name: "OPPO Enco Air3 Pro",
+                brand: "OPPO",
+                price: 5500,
+                originalPrice: 6500,
+                discount: 15,
+                category: "earbuds",
+                rating: 5,
+                reviews: 156,
+                image: "Images/image2.png",
+                colors: ["#007AFF", "#FF3B30"],
+                description: "Wireless earbuds with active noise cancellation, featuring 12.4mm dynamic drivers and up to 30 hours of total playback time. Perfect for daily use with premium sound quality.",
+                specifications: {
+                    "Driver Size": "12.4mm",
+                    "Battery Life": "6h (earbuds) + 24h (case)",
+                    "Charging": "USB-C + Wireless",
+                    "Water Resistance": "IPX4",
+                    "Bluetooth": "5.2",
+                    "Weight": "4.8g per earbud"
+                }
+            },
+            {
+                id: "oneplus-nord-buds-3-pro",
+                name: "OnePlus Nord Buds 3 Pro",
+                brand: "OnePlus",
+                price: 2599,
+                originalPrice: 3999,
+                discount: 35,
+                category: "earbuds",
+                rating: 5,
+                reviews: 89,
+                image: "Images/image3.png",
+                colors: ["#000000", "#FF6B35"],
+                description: "Premium sound with long battery life, featuring 11mm dynamic drivers and up to 40 hours of total playback. Includes active noise cancellation and premium comfort.",
+                specifications: {
+                    "Driver Size": "11mm",
+                    "Battery Life": "8h (earbuds) + 32h (case)",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IP55",
+                    "Bluetooth": "5.3",
+                    "Weight": "5.2g per earbud"
+                }
+            },
+            {
+                id: "cmf-nothing-earbuds",
+                name: "CMF by Nothing Earbuds",
+                brand: "Nothing",
+                price: 3990,
+                originalPrice: 4990,
+                discount: 20,
+                category: "earbuds",
+                rating: 4,
+                reviews: 234,
+                image: "Images/image4.png",
+                colors: ["#000000", "#ffffff"],
+                description: "Transparent design with exceptional audio quality, featuring 11.6mm dynamic drivers and up to 35 hours of total playback. Unique aesthetic meets premium performance.",
+                specifications: {
+                    "Driver Size": "11.6mm",
+                    "Battery Life": "7h (earbuds) + 28h (case)",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IP54",
+                    "Bluetooth": "5.2",
+                    "Weight": "4.7g per earbud"
+                }
+            },
+            {
+                id: "soundcore-anker-q20i",
+                name: "Soundcore by Anker Q20i",
+                brand: "Soundcore",
+                price: 3692,
+                originalPrice: 4999,
+                discount: 26,
+                category: "headphones",
+                rating: 4,
+                reviews: 567,
+                image: "Images/image5.png",
+                colors: ["#000000", "#4A90E2"],
+                description: "Over-ear headphones with premium comfort, featuring 40mm drivers and up to 40 hours of playback. Perfect for long listening sessions with exceptional comfort.",
+                specifications: {
+                    "Driver Size": "40mm",
+                    "Battery Life": "40 hours",
+                    "Charging": "USB-C",
+                    "Weight": "260g",
+                    "Bluetooth": "5.0",
+                    "Foldable": "Yes"
+                }
+            },
+            {
+                id: "mivi-superpods-immersio",
+                name: "Mivi SuperPods Immersio",
+                brand: "Mivi",
+                price: 1999,
+                originalPrice: 2999,
+                discount: 33,
+                category: "earbuds",
+                rating: 4,
+                reviews: 123,
+                image: "Images/image6.png",
+                colors: ["#FF6B6B", "#4ECDC4"],
+                description: "Immersive sound experience with 13mm drivers and up to 30 hours of total playback. Features touch controls and premium build quality.",
+                specifications: {
+                    "Driver Size": "13mm",
+                    "Battery Life": "6h (earbuds) + 24h (case)",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IPX4",
+                    "Bluetooth": "5.1",
+                    "Weight": "4.5g per earbud"
+                }
+            },
+            {
+                id: "apple-airpods-4",
+                name: "Apple AirPods 4",
+                brand: "Apple",
+                price: 11499,
+                originalPrice: 12999,
+                discount: 12,
+                category: "earbuds",
+                rating: 5,
+                reviews: 892,
+                image: "Images/image7.png",
+                colors: ["#000000", "#ffffff"],
+                description: "Premium wireless earbuds with seamless integration, featuring custom audio drivers and up to 30 hours of total playback. Perfect for Apple ecosystem users.",
+                specifications: {
+                    "Driver Size": "Custom",
+                    "Battery Life": "6h (earbuds) + 24h (case)",
+                    "Charging": "Lightning + Wireless",
+                    "Water Resistance": "IPX4",
+                    "Bluetooth": "5.0",
+                    "Weight": "5.3g per earbud"
+                }
+            },
+            {
+                id: "marshall-minor-iv",
+                name: "Marshall Minor IV",
+                brand: "Marshall",
+                price: 11999,
+                originalPrice: 13999,
+                discount: 14,
+                category: "headphones",
+                rating: 5,
+                reviews: 445,
+                image: "Images/image8.png",
+                colors: ["#000000", "#8B4513"],
+                description: "Classic Marshall sound in modern design, featuring 12mm drivers and up to 20 hours of playback. Iconic Marshall aesthetic with premium audio quality.",
+                specifications: {
+                    "Driver Size": "12mm",
+                    "Battery Life": "20 hours",
+                    "Charging": "USB-C",
+                    "Weight": "4.2g",
+                    "Bluetooth": "5.2",
+                    "Water Resistance": "IPX4"
+                }
+            },
+            {
+                id: "jbl-flip-6",
+                name: "JBL Flip 6",
+                brand: "JBL",
+                price: 8999,
+                originalPrice: 10999,
+                discount: 18,
+                category: "speakers",
+                rating: 5,
+                reviews: 678,
+                image: "Images/speaker1.png",
+                colors: ["#000000", "#4A90E2", "#FF6B6B"],
+                description: "Portable Bluetooth speaker with powerful bass, featuring dual passive radiators and up to 12 hours of playback. Perfect for outdoor activities and parties.",
+                specifications: {
+                    "Output Power": "30W",
+                    "Battery Life": "12 hours",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IPX7",
+                    "Bluetooth": "5.1",
+                    "Weight": "550g"
+                }
+            },
+            {
+                id: "sony-srs-xb43",
+                name: "Sony SRS-XB43",
+                brand: "Sony",
+                price: 15999,
+                originalPrice: 18999,
+                discount: 16,
+                category: "speakers",
+                rating: 5,
+                reviews: 456,
+                image: "Images/speaker2.png",
+                colors: ["#000000", "#FF6B6B", "#4A90E2"],
+                description: "Extra bass portable speaker with party lights, featuring dual woofers and up to 24 hours of playback. Includes customizable lighting effects.",
+                specifications: {
+                    "Output Power": "49W",
+                    "Battery Life": "24 hours",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IP67",
+                    "Bluetooth": "5.0",
+                    "Weight": "1.4kg"
+                }
+            },
+            {
+                id: "bose-soundlink-revolve-plus",
+                name: "Bose SoundLink Revolve+",
+                brand: "Bose",
+                price: 22999,
+                originalPrice: 25999,
+                discount: 12,
+                category: "speakers",
+                rating: 5,
+                reviews: 789,
+                image: "Images/speaker3.png",
+                colors: ["#000000", "#8B4513"],
+                description: "360-degree sound with deep bass, featuring dual passive radiators and up to 17 hours of playback. Premium build quality with seamless connectivity.",
+                specifications: {
+                    "Output Power": "N/A",
+                    "Battery Life": "17 hours",
+                    "Charging": "USB-C",
+                    "Water Resistance": "IPX4",
+                    "Bluetooth": "4.2",
+                    "Weight": "900g"
+                }
+            },
+            {
+                id: "apple-watch-series-9",
+                name: "Apple Watch Series 9",
+                brand: "Apple",
+                price: 45999,
+                originalPrice: 49999,
+                discount: 8,
+                category: "watches",
+                rating: 5,
+                reviews: 1234,
+                image: "Images/watch1.png",
+                colors: ["#000000", "#FF6B6B", "#4A90E2"],
+                description: "Advanced smartwatch with health monitoring, featuring the new S9 chip and up to 18 hours of battery life. Includes ECG, blood oxygen monitoring, and fitness tracking.",
+                specifications: {
+                    "Display": "Always-On Retina",
+                    "Battery Life": "18 hours",
+                    "Charging": "Wireless",
+                    "Water Resistance": "WR50",
+                    "Connectivity": "GPS + Cellular",
+                    "Weight": "31.9g"
+                }
+            },
+            {
+                id: "samsung-galaxy-watch-6",
+                name: "Samsung Galaxy Watch 6",
+                brand: "Samsung",
+                price: 28999,
+                originalPrice: 32999,
+                discount: 12,
+                category: "watches",
+                rating: 5,
+                reviews: 567,
+                image: "Images/watch2.png",
+                colors: ["#000000", "#4A90E2", "#FF6B6B"],
+                description: "Android smartwatch with fitness tracking, featuring advanced health monitoring and up to 40 hours of battery life. Perfect for Android users.",
+                specifications: {
+                    "Display": "Super AMOLED",
+                    "Battery Life": "40 hours",
+                    "Charging": "Wireless",
+                    "Water Resistance": "5ATM + IP68",
+                    "Connectivity": "GPS + LTE",
+                    "Weight": "28.7g"
+                }
+            },
+            {
+                id: "garmin-fenix-7",
+                name: "Garmin Fenix 7",
+                brand: "Garmin",
+                price: 65999,
+                originalPrice: 72999,
+                discount: 10,
+                category: "watches",
+                rating: 5,
+                reviews: 234,
+                image: "Images/watch3.png",
+                colors: ["#000000", "#8B4513"],
+                description: "Premium multisport GPS watch with advanced training metrics and up to 18 days of battery life. Perfect for serious athletes and outdoor enthusiasts.",
+                specifications: {
+                    "Display": "Transflective MIP",
+                    "Battery Life": "18 days",
+                    "Charging": "USB-C",
+                    "Water Resistance": "10ATM",
+                    "Connectivity": "GPS + GLONASS",
+                    "Weight": "79g"
+                }
+            }
+        ];
+
+        let currentProduct = null;
+        let selectedColor = null;
+        let selectedQuantity = 1;
+
+        // Get product ID from URL
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Load product details
+        function loadProduct() {
+            const productId = getProductIdFromUrl();
+            if (!productId) {
+                showError('No product ID specified');
+                return;
+            }
+
+            currentProduct = products.find(p => p.id === productId);
+            if (!currentProduct) {
+                showError('Product not found');
+                return;
+            }
+
+            displayProduct();
+            loadRelatedProducts();
+        }
+
+        // Display product information
+        function displayProduct() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('product-content').style.display = 'block';
+
+            // Set page title
+            document.title = `${currentProduct.name} - HearHut`;
+
+            // Basic info
+            document.getElementById('brand-name').textContent = currentProduct.brand;
+            document.getElementById('product-title').textContent = currentProduct.name;
+            document.getElementById('current-price').textContent = `₹${currentProduct.price.toLocaleString()}`;
+            document.getElementById('original-price').textContent = `₹${currentProduct.originalPrice.toLocaleString()}`;
+            document.getElementById('discount-badge').textContent = `${currentProduct.discount}% OFF`;
+            document.getElementById('description-text').textContent = currentProduct.description;
+
+            // Rating
+            const stars = '★'.repeat(currentProduct.rating) + '☆'.repeat(5 - currentProduct.rating);
+            document.getElementById('stars').textContent = stars;
+            document.getElementById('review-count').textContent = `(${currentProduct.reviews})`;
+
+            // Main image
+            document.getElementById('main-image').src = currentProduct.image;
+            document.getElementById('main-image').alt = currentProduct.name;
+
+            // Color options
+            const colorOptionsContainer = document.getElementById('color-options');
+            colorOptionsContainer.innerHTML = '';
+            currentProduct.colors.forEach((color, index) => {
+                const colorOption = document.createElement('div');
+                colorOption.className = 'color-option';
+                colorOption.style.backgroundColor = color;
+                colorOption.onclick = () => selectColor(index);
+                if (index === 0) {
+                    colorOption.classList.add('selected');
+                    selectedColor = color;
+                }
+                colorOptionsContainer.appendChild(colorOption);
+            });
+
+            // Thumbnail images (using main image for now)
+            const thumbnailContainer = document.getElementById('thumbnail-images');
+            thumbnailContainer.innerHTML = '';
+            const thumbnail = document.createElement('img');
+            thumbnail.className = 'thumbnail active';
+            thumbnail.src = currentProduct.image;
+            thumbnail.alt = currentProduct.name;
+            thumbnail.onclick = () => setMainImage(currentProduct.image);
+            thumbnailContainer.appendChild(thumbnail);
+
+            // Specifications
+            const specsContainer = document.getElementById('specs-grid');
+            specsContainer.innerHTML = '';
+            Object.entries(currentProduct.specifications).forEach(([key, value]) => {
+                const specItem = document.createElement('div');
+                specItem.className = 'spec-item';
+                specItem.innerHTML = `
+                    <div class="spec-label">${key}</div>
+                    <div class="spec-value">${value}</div>
+                `;
+                specsContainer.appendChild(specItem);
+            });
+        }
+
+        // Select color
+        function selectColor(index) {
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('.color-option')[index].classList.add('selected');
+            selectedColor = currentProduct.colors[index];
+        }
+
+        // Set main image
+        function setMainImage(src) {
+            document.getElementById('main-image').src = src;
+            document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Change quantity
+        function changeQuantity(delta) {
+            const input = document.getElementById('quantity-input');
+            let newQuantity = parseInt(input.value) + delta;
+            newQuantity = Math.max(1, Math.min(99, newQuantity));
+            input.value = newQuantity;
+            selectedQuantity = newQuantity;
+        }
+
+        // Add to cart
+        function addToCartFromPage() {
+            if (!currentProduct) return;
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === currentProduct.id);
+
+            if (existingItem) {
+                existingItem.quantity += selectedQuantity;
+            } else {
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    image: currentProduct.image,
+                    brand: currentProduct.brand,
+                    quantity: selectedQuantity
+                });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            // Show success message
+            alert(`${selectedQuantity} ${currentProduct.name} added to cart!`);
+        }
+
+        // Toggle wishlist
+        function toggleWishlist() {
+            const btn = document.getElementById('wishlist-btn');
+            btn.classList.toggle('active');
+            
+            if (btn.classList.contains('active')) {
+                btn.innerHTML = '<i class="fas fa-heart"></i>';
+            } else {
+                btn.innerHTML = '<i class="far fa-heart"></i>';
+            }
+        }
+
+        // Load related products
+        function loadRelatedProducts() {
+            const relatedContainer = document.getElementById('related-grid');
+            const relatedProducts = products
+                .filter(p => p.id !== currentProduct.id && p.category === currentProduct.category)
+                .slice(0, 4);
+
+            relatedContainer.innerHTML = '';
+            relatedProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="card">
+                        <div class="brand-name">${product.brand}</div>
+                        <h3>${product.name}</h3>
+                        <div class="star-rating">
+                            <div class="stars">${'★'.repeat(product.rating)}${'☆'.repeat(5 - product.rating)}</div>
+                            <span class="review-count">(${product.reviews})</span>
+                        </div>
+                        <div class="price-section">
+                            <span class="current-price">₹${product.price.toLocaleString()}</span>
+                            <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                        </div>
+                        <button class="add-to-cart" onclick="window.location.href='product.html?id=${product.id}'">
+                            <i class="fas fa-shopping-cart"></i>
+                            View Details
+                        </button>
+                    </div>
+                `;
+                relatedContainer.appendChild(productCard);
+            });
+        }
+
+        // Show error
+        function showError(message) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').textContent = message;
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+        }
+
+        // Search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+                }
+            });
+
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        window.location.href = `shop.html?search=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            setupSearch();
+            loadProduct();
+        });
+    </script>
+</body>
+</html>

@@ -25,18 +25,42 @@
     .cart-header {
       text-align: center;
       margin-bottom: 40px;
+      background: linear-gradient(135deg, var(--primary-color), #005ecc);
+      color: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 114, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cart-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
     }
 
     .cart-header h1 {
       font-size: 2.5rem;
-      color: var(--text-color);
+      color: white;
       margin-bottom: 10px;
       font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
     }
 
     .cart-header p {
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.9);
       font-size: 1.1rem;
+      margin: 0;
+      position: relative;
+      z-index: 1;
     }
 
     .cart-content {
@@ -76,27 +100,91 @@
       border-radius: 15px;
       margin-bottom: 20px;
       transition: all 0.3s ease;
-      background: #fafbfc;
+      background: linear-gradient(135deg, #fafbfc 0%, #f8f9fa 100%);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .cart-item:nth-child(1) { animation-delay: 0.1s; }
+    .cart-item:nth-child(2) { animation-delay: 0.2s; }
+    .cart-item:nth-child(3) { animation-delay: 0.3s; }
+    .cart-item:nth-child(4) { animation-delay: 0.4s; }
+    .cart-item:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .cart-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary-color), #005ecc);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .cart-item:hover::before {
+      transform: scaleY(1);
     }
 
     .cart-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       border-color: var(--primary-color);
     }
 
     .cart-item-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 12px;
+      width: 90px;
+      height: 90px;
+      border-radius: 15px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      border: 3px solid white;
+      position: relative;
+    }
+
+    .cart-item:hover .cart-item-image {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    .cart-item-image::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,114,255,0.1), rgba(0,94,204,0.1));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 15px;
+    }
+
+    .cart-item:hover .cart-item-image::after {
+      opacity: 1;
     }
 
     .cart-item-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .cart-item:hover .cart-item-image img {
+      transform: scale(1.1);
     }
 
     .cart-item-details h3 {
@@ -252,6 +340,27 @@
       box-shadow: none;
     }
 
+    .clear-cart-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #6c757d, #495057);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+      box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    .clear-cart-btn:hover {
+      background: linear-gradient(135deg, #495057, #343a40);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 117, 125, 0.4);
+    }
+
     .empty-cart {
       text-align: center;
       padding: 60px 20px;
@@ -366,7 +475,7 @@
         <div class="navlinks">
           <a href="index.html" class="bar">Home</a>
           <a href="contact.html" class="bar">Contact</a>
-          <a href="" class="bar">About</a>
+          <a href="about.html" class="bar">About</a>
           <a href="cart.html" class="bar" id="cart-icon">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
@@ -443,6 +552,28 @@
       cartCount.textContent = totalItems;
     }
 
+    // Function to fix image paths based on product names
+    function getCorrectImagePath(productName) {
+      const imageMapping = {
+        'HyperX Cloud III': 'Images/imag1.png',
+        'OPPO Enco Air3 Pro': 'Images/image2.png',
+        'OnePlus Nord Buds 3 Pro': 'Images/image3.png',
+        'CMF by Nothing Earbuds': 'Images/image4.png',
+        'Soundcore by Anker Q20i': 'Images/image5.png',
+        'Mivi SuperPods Immersio': 'Images/image6.png',
+        'Apple AirPods 4': 'Images/image7.png',
+        'Marshall Minor IV': 'Images/image8.png',
+        'JBL Flip 6': 'Images/image.png',
+        'Sony SRS-XB43': 'Images/image copy.png',
+        'Bose SoundLink Revolve+': 'Images/bgm.png',
+        'Apple Watch Series 9': 'Images/thumb-1920-1398235.png',
+        'Samsung Galaxy Watch 6': 'Images/thumb-1920-1398235.png',
+        'Garmin Fenix 7': 'Images/thumb-1920-1398235.png'
+      };
+      
+      return imageMapping[productName] || 'Images/imag1.png'; // Default fallback
+    }
+
     function renderCart() {
       if (cart.length === 0) {
         cartContent.innerHTML = `
@@ -459,26 +590,29 @@
         return;
       }
 
-      const cartItemsHTML = cart.map(item => `
-        <div class="cart-item" data-id="${item.id}">
-          <div class="cart-item-image">
-            <img src="${item.image}" alt="${item.name}">
-          </div>
-          <div class="cart-item-details">
-            <h3>${item.name}</h3>
-            <div class="brand">${item.brand}</div>
-            <div class="price">₹${item.price.toLocaleString()}</div>
-          </div>
-          <div class="quantity-controls">
-            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-            <span class="quantity-display">${item.quantity}</span>
-            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+      const cartItemsHTML = cart.map(item => {
+        const correctImagePath = getCorrectImagePath(item.name);
+        return `
+          <div class="cart-item" data-id="${item.id}">
+            <div class="cart-item-image">
+              <img src="${correctImagePath}" alt="${item.name}" onerror="this.src='Images/imag1.png'">
+            </div>
+            <div class="cart-item-details">
+              <h3>${item.name}</h3>
+              <div class="brand">${item.brand}</div>
+              <div class="price">₹${item.price.toLocaleString()}</div>
+            </div>
+            <div class="quantity-controls">
+              <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+              <span class="quantity-display">${item.quantity}</span>
+              <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
           </div>
           <button class="remove-btn" onclick="removeFromCart(${item.id})">
             <i class="fas fa-trash"></i> Remove
           </button>
         </div>
-      `).join('');
+      `;
+      }).join('');
 
       const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const subtotal = total;
@@ -509,6 +643,10 @@
             <i class="fas fa-credit-card"></i>
             Proceed to Checkout
           </button>
+          <button class="clear-cart-btn" onclick="clearCart()">
+            <i class="fas fa-trash-alt"></i>
+            Clear Cart
+          </button>
         </div>
       `;
     }
@@ -516,10 +654,17 @@
     function updateQuantity(productId, change) {
       const item = cart.find(item => item.id === productId);
       if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
+        const newQuantity = item.quantity + change;
+        
+        if (newQuantity <= 0) {
+          // Remove item if quantity becomes 0 or negative
           removeFromCart(productId);
+        } else if (newQuantity > 99) {
+          // Limit maximum quantity to 99
+          alert('Maximum quantity allowed is 99');
+          return;
         } else {
+          item.quantity = newQuantity;
           localStorage.setItem('cart', JSON.stringify(cart));
           updateCartCount();
           renderCart();
@@ -528,10 +673,20 @@
     }
 
     function removeFromCart(productId) {
-      cart = cart.filter(item => item.id !== productId);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartCount();
-      renderCart();
+      const itemToRemove = cart.find(item => item.id === productId);
+      if (itemToRemove) {
+        // Add confirmation for expensive items
+        if (itemToRemove.price > 5000) {
+          if (!confirm(`Are you sure you want to remove ${itemToRemove.name} from your cart?`)) {
+            return;
+          }
+        }
+        
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCart();
+      }
     }
 
     function proceedToCheckout() {
@@ -540,9 +695,23 @@
         return;
       }
       
-      // For now, just show an alert
-      // In a real application, this would redirect to a checkout page
-      alert('Checkout functionality would be implemented here. Redirecting to payment gateway...');
+      // Redirect to checkout page with cart data
+      window.location.href = 'checkout.html';
+    }
+
+    function clearCart() {
+      if (cart.length === 0) {
+        alert('Cart is already empty');
+        return;
+      }
+      
+      if (confirm('Are you sure you want to clear your entire cart?')) {
+        cart = [];
+        localStorage.removeItem('cart');
+        updateCartCount();
+        renderCart();
+        alert('Cart cleared successfully');
+      }
     }
 
     // Search functionality

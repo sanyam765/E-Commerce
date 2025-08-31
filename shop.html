@@ -312,6 +312,37 @@
   transform: translateY(-2px);
 }
 
+.product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.view-details-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  color: #495057;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #e9ecef;
+  width: 100%;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.view-details-btn:hover {
+  background: #e9ecef;
+  color: #495057;
+  transform: translateY(-2px);
+  border-color: #dee2e6;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .shop-container {
@@ -479,10 +510,12 @@
         <a href="signin.html" class="bar">Sign in</a>
       </div>
       <div class="navlinks">
+        <a href="index.html" class="bar">Home</a>
+        <a href="shop.html" class="bar">Shop</a>
         <a href="contact.html" class="bar">Contact</a>
-        <a href="" class="bar">About</a>
+        <a href="about.html" class="bar">About</a>
         <a href="#" class="bar"><i class="fas fa-heart"></i></a>
-        <a href="#" class="bar" id="cart-icon">
+        <a href="cart.html" class="bar" id="cart-icon">
           <i class="fas fa-shopping-cart"></i>
           <span id="cart-count">0</span>
         </a>
@@ -591,7 +624,7 @@
 // Product Data
 const productsData = [
   {
-    id: 1,
+    id: "hyperx-cloud-iii",
     name: "HyperX Cloud III",
     brand: "HyperX",
     price: 6999,
@@ -605,7 +638,7 @@ const productsData = [
     description: "Premium gaming headset with superior sound quality"
   },
   {
-    id: 2,
+    id: "oppo-enco-air3-pro",
     name: "OPPO Enco Air3 Pro",
     brand: "OPPO",
     price: 5500,
@@ -619,7 +652,7 @@ const productsData = [
     description: "Wireless earbuds with active noise cancellation"
   },
   {
-    id: 3,
+    id: "oneplus-nord-buds-3-pro",
     name: "OnePlus Nord Buds 3 Pro",
     brand: "OnePlus",
     price: 2599,
@@ -633,7 +666,7 @@ const productsData = [
     description: "Premium sound with long battery life"
   },
   {
-    id: 4,
+    id: "cmf-nothing-earbuds",
     name: "CMF by Nothing Earbuds",
     brand: "Nothing",
     price: 3990,
@@ -647,7 +680,7 @@ const productsData = [
     description: "Transparent design with exceptional audio"
   },
   {
-    id: 5,
+    id: "soundcore-anker-q20i",
     name: "Soundcore by Anker Q20i",
     brand: "Soundcore",
     price: 3692,
@@ -661,7 +694,7 @@ const productsData = [
     description: "Over-ear headphones with premium comfort"
   },
   {
-    id: 6,
+    id: "mivi-superpods-immersio",
     name: "Mivi SuperPods Immersio",
     brand: "Mivi",
     price: 1999,
@@ -675,7 +708,7 @@ const productsData = [
     description: "Immersive sound experience"
   },
   {
-    id: 7,
+    id: "apple-airpods-4",
     name: "Apple AirPods 4",
     brand: "Apple",
     price: 11499,
@@ -689,7 +722,7 @@ const productsData = [
     description: "Premium wireless earbuds with seamless integration"
   },
   {
-    id: 8,
+    id: "marshall-minor-iv",
     name: "Marshall Minor IV",
     brand: "Marshall",
     price: 11999,
@@ -703,7 +736,7 @@ const productsData = [
     description: "Classic Marshall sound in modern design"
   },
   {
-    id: 9,
+    id: "jbl-flip-6",
     name: "JBL Flip 6",
     brand: "JBL",
     price: 8999,
@@ -712,12 +745,12 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 678,
-    image: "images/",
+    image: "Images/speaker1.png",
     colors: ["#000000", "#4A90E2", "#FF6B6B"],
     description: "Portable Bluetooth speaker with powerful bass"
   },
   {
-    id: 10,
+    id: "sony-srs-xb43",
     name: "Sony SRS-XB43",
     brand: "Sony",
     price: 15999,
@@ -726,12 +759,12 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 456,
-    image: "images/",
+    image: "Images/speaker2.png",
     colors: ["#000000", "#FF6B6B", "#4A90E2"],
     description: "Extra bass portable speaker with party lights"
   },
   {
-    id: 11,
+    id: "bose-soundlink-revolve-plus",
     name: "Bose SoundLink Revolve+",
     brand: "Bose",
     price: 22999,
@@ -740,12 +773,12 @@ const productsData = [
     category: "speakers",
     rating: 5,
     reviews: 789,
-    image: "images/",
+    image: "Images/speaker3.png",
     colors: ["#000000", "#8B4513"],
     description: "360-degree sound with deep bass"
   },
   {
-    id: 12,
+    id: "apple-watch-series-9",
     name: "Apple Watch Series 9",
     brand: "Apple",
     price: 45999,
@@ -754,12 +787,12 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 1234,
-    image: "images/",
+    image: "Images/watch1.png",
     colors: ["#000000", "#FF6B6B", "#4A90E2"],
     description: "Advanced smartwatch with health monitoring"
   },
   {
-    id: 13,
+    id: "samsung-galaxy-watch-6",
     name: "Samsung Galaxy Watch 6",
     brand: "Samsung",
     price: 28999,
@@ -768,12 +801,12 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 567,
-    image: "images/",
+    image: "Images/watch2.png",
     colors: ["#000000", "#4A90E2", "#FF6B6B"],
     description: "Android smartwatch with fitness tracking"
   },
   {
-    id: 14,
+    id: "garmin-fenix-7",
     name: "Garmin Fenix 7",
     brand: "Garmin",
     price: 65999,
@@ -782,7 +815,7 @@ const productsData = [
     category: "watches",
     rating: 5,
     reviews: 234,
-    image: "images/",
+    image: "Images/watch3.png",
     colors: ["#000000", "#8B4513"],
     description: "Premium multisport GPS watch"
   }
@@ -915,10 +948,16 @@ function createProductCard(product) {
       <div class="color-options">
         ${product.colors.map(color => `<div class="color-option" style="background-color: ${color}"></div>`).join('')}
       </div>
-      <button class="add-to-cart" onclick="addToCart(${product.id})">
-        <i class="fas fa-shopping-cart"></i>
-        Add to Cart
-      </button>
+      <div class="product-actions">
+        <button class="add-to-cart" onclick="addToCart(${product.id})">
+          <i class="fas fa-shopping-cart"></i>
+          Add to Cart
+        </button>
+        <a href="product.html?id=${product.id}" class="view-details-btn">
+          <i class="fas fa-eye"></i>
+          View Details
+        </a>
+      </div>
     </div>
   `;
   

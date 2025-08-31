@@ -14,12 +14,59 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
       background: linear-gradient(135deg, #0077ff 0%, #00c6ff 100%);
       color: #000;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .hearhut-logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding-top: 80px;
     }
 
     .container {
@@ -124,7 +171,24 @@
 </head>
 
 <body>
-  <div class="container">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="hearhut-logo">
+        <i class="fas fa-headphones-alt"></i>
+        HearHut
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="container">
     <div class="logo">
       <i class="fas fa-headphones-alt"></i> HearHut
     </div>
@@ -141,25 +205,86 @@
 
     <div class="extras">
       <p>Don’t have an account? <a href="signup.html">Sign Up</a></p>
+      </div>
     </div>
   </div>
 
 <script>
-const signinForm = document.getElementById('loginForm'); // match the form's ID
+// Cart functionality
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function updateCartCount() {
+  const cartCount = document.getElementById('cart-count');
+  if (cartCount) {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+  }
+}
+
+// Initialize cart count
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  
+  // Login handling
+  const storedEmail = localStorage.getItem('userEmail');
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const signInLink = document.querySelector('.nav-links a[href="signin.html"]');
+
+  if (isLoggedIn && storedEmail && signInLink) {
+    const username = storedEmail.split('@')[0];
+    const userDiv = document.createElement('div');
+    userDiv.classList.add('user-info');
+    userDiv.style.display = 'flex';
+    userDiv.style.alignItems = 'center';
+    userDiv.style.gap = '8px';
+
+    const welcomeSpan = document.createElement('span');
+    welcomeSpan.textContent = `Welcome, ${username}!`;
+    welcomeSpan.style.color = 'white';
+    welcomeSpan.style.fontWeight = '500';
+    welcomeSpan.style.fontSize = '14px';
+
+    const logoutBtn = document.createElement('button');
+    logoutBtn.textContent = 'Logout';
+    logoutBtn.classList.add('logout-btn');
+    logoutBtn.style.cssText = `
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+    `;
+
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userPassword');
+      window.location.reload();
+    });
+
+    userDiv.appendChild(welcomeSpan);
+    userDiv.appendChild(logoutBtn);
+    signInLink.replaceWith(userDiv);
+  }
+});
+
+const signinForm = document.getElementById('loginForm');
 
 signinForm.addEventListener('submit', function(e){
   e.preventDefault();
 
-  const email = document.getElementById('loginEmail').value; // match input IDs
+  const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
   const storedEmail = localStorage.getItem('userEmail');
   const storedPassword = localStorage.getItem('userPassword');
 
   if(email === storedEmail && password === storedPassword){
-    localStorage.setItem('isLoggedIn', 'true'); // mark user as logged in
+    localStorage.setItem('isLoggedIn', 'true');
     alert("Signed in successfully!");
-    window.location.href = 'index.html'; // redirect to home
+    window.location.href = 'index.html';
   } else {
     alert("Invalid email or password!");
   }

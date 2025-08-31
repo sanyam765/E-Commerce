@@ -98,8 +98,37 @@
 .product-card .add-to-cart:hover {
   background: #3a94fa;
   transform: translateY(-2px);
+}
+
+.product-card .product-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-card .view-details-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  color: #495057;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #e9ecef;
+  width: 100%;
+  justify-content: center;
   text-decoration: none;
-  color: white;
+}
+
+.product-card .view-details-btn:hover {
+  background: #e9ecef;
+  color: #495057;
+  transform: translateY(-2px);
+  border-color: #dee2e6;
 }
 
 /* Hero Shop Now Button Styles */
@@ -193,31 +222,31 @@
 
 <body>
 
+<!-- NAVBAR -->
 <nav class="navbar">
-<div class="logo">
-<div class="nav-links">
-<div class="hearhut-logo">
-<i class="fas fa-headphones-alt"></i>
-<span>Hear<span class="highlight">Hut</span></span>
-</div>
-<div class="searchbar">
-<i class="fas fa-search" id="searchBtn"></i>
-  <input type="text" class="input" id="searchInput" placeholder="Search products....">
-  <a href="signin.html" class="bar">Sign in</a>
-</div>
-
+  <div class="logo">
+    <div class="nav-links">
+      <div class="hearhut-logo">
+        <i class="fas fa-headphones-alt"></i>
+        <span>Hear<span class="highlight">Hut</span></span>
+      </div>
+      <div class="searchbar">
+        <i class="fas fa-search" id="searchBtn"></i>
+        <input type="text" class="input" id="searchInput" placeholder="Search products....">
+        <a href="signin.html" class="bar">Sign in</a>
+      </div>
       <div class="navlinks">
-
-<a href="index.html" class="bar">Home</a>
-<a href="contact.html" class="bar">Contact</a>
-<a href="" class="bar">About</a>
-<a href="cart.html" class="bar" id="cart-icon">
-<i class="fas fa-shopping-cart"></i>
-<span id="cart-count">0</span>
-</a>
-</div>
-</div>
-</div>
+        <a href="index.html" class="bar">Home</a>
+        <a href="shop.html" class="bar">Shop</a>
+        <a href="contact.html" class="bar">Contact</a>
+                  <a href="about.html" class="bar">About</a>
+        <a href="cart.html" class="bar" id="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </nav>
 
 
@@ -244,7 +273,7 @@ Shop Now
 <div class="product-grid">
 <div class="product-card" data-name="HyperX Cloud III" data-price="6999" data-id="hyperx-cloud-iii">
 <div class="product-image">
-<img src="images/imag1.png" alt="HyperX Cloud III">
+<img src="Images/imag1.png" alt="HyperX Cloud III">
 </div>
 <div class="card">
 <div class="brand-name">HyperX</div>
@@ -261,16 +290,22 @@ Shop Now
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('hyperx-cloud-iii', 'HyperX Cloud III', 6999, 'images/imag1.png', 'HyperX')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('hyperx-cloud-iii', 'HyperX Cloud III', 6999, 'Images/imag1.png', 'HyperX')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=hyperx-cloud-iii" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
 <div class="product-card" data-name="OPPO Enco Air3 Pro" data-price="5500" data-id="oppo-enco-air3-pro">
 <div class="product-image">
-<img src="images/image2.png" alt="OPPO Enco Air3 Pro">
+<img src="Images/image2.png" alt="OPPO Enco Air3 Pro">
 </div>
 <div class="card">
 <div class="brand-name">OPPO</div>
@@ -287,10 +322,16 @@ Add to Cart
 <div class="color-option" style="background-color: #007AFF"></div>
 <div class="color-option" style="background-color: #FF3B30"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('oppo-enco-air3-pro', 'OPPO Enco Air3 Pro', 5500, 'images/image2.png', 'OPPO')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('oppo-enco-air3-pro', 'OPPO Enco Air3 Pro', 5500, 'Images/image2.png', 'OPPO')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=oppo-enco-air3-pro" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -313,10 +354,16 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #FF6B35"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('oneplus-nord-buds-3-pro', 'OnePlus Nord Buds 3 Pro', 2599, 'images/image3.png', 'OnePlus')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('oneplus-nord-buds-3-pro', 'OnePlus Nord Buds 3 Pro', 2599, 'Images/image3.png', 'OnePlus')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=oneplus-nord-buds-3-pro" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -339,10 +386,16 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('cmf-nothing-earbuds', 'CMF by Nothing Earbuds', 3990, 'images/image4.png', 'Nothing')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('cmf-nothing-earbuds', 'CMF by Nothing Earbuds', 3990, 'Images/image4.png', 'Nothing')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=cmf-nothing-earbuds" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -365,10 +418,16 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #4A90E2"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('soundcore-anker-q20i', 'Soundcore by Anker Q20i', 3692, 'images/image5.png', 'Soundcore')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('soundcore-anker-q20i', 'Soundcore by Anker Q20i', 3692, 'Images/image5.png', 'Soundcore')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=soundcore-anker-q20i" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -391,10 +450,16 @@ Add to Cart
 <div class="color-option" style="background-color: #FF6B6B"></div>
 <div class="color-option" style="background-color: #4ECDC4"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('mivi-superpods-immersio', 'Mivi SuperPods Immersio', 1999, 'images/image6.png', 'Mivi')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('mivi-superpods-immersio', 'Mivi SuperPods Immersio', 1999, 'Images/image6.png', 'Mivi')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=mivi-superpods-immersio" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -417,10 +482,16 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('apple-airpods-4', 'Apple AirPods 4', 11499, 'images/image7.png', 'Apple')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('apple-airpods-4', 'Apple AirPods 4', 11499, 'Images/image7.png', 'Apple')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=apple-airpods-4" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 
@@ -443,10 +514,16 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #8B4513"></div>
 </div>
-<button class="add-to-cart" onclick="addToCart('marshall-minor-iv', 'Marshall Minor IV', 11999, 'images/image8.png', 'Marshall')">
+<div class="product-actions">
+<button class="add-to-cart" onclick="addToCart('marshall-minor-iv', 'Marshall Minor IV', 11999, 'Images/image8.png', 'Marshall')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
 </button>
+<a href="product.html?id=marshall-minor-iv" class="view-details-btn">
+<i class="fas fa-eye"></i>
+View Details
+</a>
+</div>
 </div>
 </div>
 </div>
@@ -472,10 +549,10 @@ Add to Cart
 <div class="footer-column">
 <h3>Quick Links</h3>
 <ul>
-<li><a href="#">Shop</a></li>
-<li><a href="#">Contact</a></li>
-<li><a href="#">About</a></li>
-<li><a href="#">FAQ</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="#">FAQ</a></li>
 </ul>
 </div>
 <div class="footer-column">
