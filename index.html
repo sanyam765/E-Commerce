@@ -81,7 +81,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-    background: #005ecc;
+  background: #005ecc;
   color: white;
   padding: 10px 16px;
   border-radius: 8px;
@@ -206,13 +206,12 @@
   <a href="signin.html" class="bar">Sign in</a>
 </div>
 
-<div class="navlinks">
+      <div class="navlinks">
 
+<a href="index.html" class="bar">Home</a>
 <a href="contact.html" class="bar">Contact</a>
 <a href="" class="bar">About</a>
-<a href="#" class="bar"><i class="fas fa-shopping-cart"></i></a>
-<a href="#" class="bar"><i class="fas fa-heart"></i></a>
-<a href="#" class="bar" id="cart-icon">
+<a href="cart.html" class="bar" id="cart-icon">
 <i class="fas fa-shopping-cart"></i>
 <span id="cart-count">0</span>
 </a>
@@ -262,10 +261,10 @@ Shop Now
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('hyperx-cloud-iii', 'HyperX Cloud III', 6999, 'images/imag1.png', 'HyperX')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -288,10 +287,10 @@ Add to Cart
 <div class="color-option" style="background-color: #007AFF"></div>
 <div class="color-option" style="background-color: #FF3B30"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('oppo-enco-air3-pro', 'OPPO Enco Air3 Pro', 5500, 'images/image2.png', 'OPPO')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -314,10 +313,10 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #FF6B35"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('oneplus-nord-buds-3-pro', 'OnePlus Nord Buds 3 Pro', 2599, 'images/image3.png', 'OnePlus')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -340,10 +339,10 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('cmf-nothing-earbuds', 'CMF by Nothing Earbuds', 3990, 'images/image4.png', 'Nothing')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -366,10 +365,10 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #4A90E2"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('soundcore-anker-q20i', 'Soundcore by Anker Q20i', 3692, 'images/image5.png', 'Soundcore')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -392,10 +391,10 @@ Add to Cart
 <div class="color-option" style="background-color: #FF6B6B"></div>
 <div class="color-option" style="background-color: #4ECDC4"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('mivi-superpods-immersio', 'Mivi SuperPods Immersio', 1999, 'images/image6.png', 'Mivi')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -418,10 +417,10 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #ffffff"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('apple-airpods-4', 'Apple AirPods 4', 11499, 'images/image7.png', 'Apple')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 
@@ -444,10 +443,10 @@ Add to Cart
 <div class="color-option" style="background-color: #000000"></div>
 <div class="color-option" style="background-color: #8B4513"></div>
 </div>
-<a href="#" class="add-to-cart">
+<button class="add-to-cart" onclick="addToCart('marshall-minor-iv', 'Marshall Minor IV', 11999, 'images/image8.png', 'Marshall')">
 <i class="fas fa-shopping-cart"></i>
 Add to Cart
-</a>
+</button>
 </div>
 </div>
 </div>
@@ -503,17 +502,6 @@ Add to Cart
 </footer>
 
 <script src="script.js"></script>
-<!-- Cart Popup -->
-<div id="cart-popup" class="cart-popup" style="display:none;">
-  <div class="cart-header">
-    <h2>Your Cart</h2>
-    <button id="close-cart">&times;</button>
-  </div>
-  <div class="cart-items" id="cart-items"></div>
-  <div class="cart-footer">
-    <h3>Total: ₹<span id="cart-total">0</span></h3>
-  </div>
-</div>
 
 </body>
 <script>
@@ -625,6 +613,52 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     performSearch();
   });
+
+  // CART FUNCTIONALITY
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  function addToCart(productId, productName, productPrice, productImage, productBrand) {
+    const product = {
+      id: productId,
+      name: productName,
+      price: parseInt(productPrice),
+      image: productImage,
+      brand: productBrand,
+      quantity: 1
+    };
+    
+    const existingItem = cart.find(item => item.id === productId);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push(product);
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+    
+    // Show success feedback
+    const button = event.target.closest('.add-to-cart');
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-check"></i> Added!';
+    button.style.background = '#00ff88';
+    
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.style.background = '';
+    }, 1500);
+  }
+  
+  function updateCartCount() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+      cartCountElement.textContent = totalItems;
+    }
+  }
+  
+  // Initialize cart count
+  updateCartCount();
 });
 </script>
 

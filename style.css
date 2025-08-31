@@ -390,7 +390,7 @@ nav.sticky {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/mega-sale-headphones.jpg') center/cover no-repeat;
+  background: linear-gradient(rgba(31, 80, 255, 0.6), rgba(0, 84, 240, 0.6)), url('images/mega-sale-headphones.jpg') center/cover no-repeat;
   position: relative;
   overflow: hidden;
   height: 22rem;
@@ -416,7 +416,7 @@ nav.sticky {
   left: -50%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  background: linear-gradient(120deg, transparent, rgba(24, 45, 232, 0.3), transparent);
   transform: skewX(-20deg);
   animation: lightBeam 3s infinite linear;
 }
