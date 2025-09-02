@@ -217,6 +217,43 @@
     margin-top: 30px;
   }
 }
+
+/* User Profile Styles */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+}
+
+.user-profile i {
+  font-size: 18px;
+  color: #fff;
+}
+
+.username {
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+}
+
+.logout-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
 </style>
 </head>
 
@@ -230,17 +267,18 @@
         <i class="fas fa-headphones-alt"></i>
         <span>Hear<span class="highlight">Hut</span></span>
       </div>
-      <div class="searchbar">
-        <i class="fas fa-search" id="searchBtn"></i>
-        <input type="text" class="input" id="searchInput" placeholder="Search products....">
-        <a href="signin.html" class="bar">Sign in</a>
-      </div>
+              <div class="searchbar">
+          <i class="fas fa-search" id="searchBtn"></i>
+          <input type="text" class="input" id="searchInput" placeholder="Search products....">
+          <div id="userSection">
+            <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+          </div>
+        </div>
       <div class="navlinks">
         <a href="index.html" class="bar">Home</a>
-        <a href="shop.html" class="bar">Shop</a>
         <a href="contact.html" class="bar">Contact</a>
-                  <a href="about.html" class="bar">About</a>
-        <a href="cart.html" class="bar" id="cart-icon">
+        <a href="about.html" class="bar">About</a>
+        <a href="#" class="bar" id="cart-icon">
           <i class="fas fa-shopping-cart"></i>
           <span id="cart-count">0</span>
         </a>
@@ -260,10 +298,10 @@
 <h1 class="a-text delay3">Elevate</h1>
 </div>
 <div class="hero-button">
-<a href="shop.html" class="shop-now-btn">
-<i class="fas fa-shopping-bag"></i>
-Shop Now
-</a>
+        <a href="#" class="shop-now-btn" id="shopNowBtn">
+          <i class="fas fa-shopping-bag"></i>
+          Shop Now
+        </a>
 </div>
 </div>
 </div>
@@ -691,52 +729,148 @@ document.addEventListener('DOMContentLoaded', () => {
     performSearch();
   });
 
-  // CART FUNCTIONALITY
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
-  function addToCart(productId, productName, productPrice, productImage, productBrand) {
-    const product = {
-      id: productId,
-      name: productName,
-      price: parseInt(productPrice),
-      image: productImage,
-      brand: productBrand,
-      quantity: 1
-    };
-    
-    const existingItem = cart.find(item => item.id === productId);
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push(product);
-    }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    
-    // Show success feedback
-    const button = event.target.closest('.add-to-cart');
-    const originalText = button.innerHTML;
-    button.innerHTML = '<i class="fas fa-check"></i> Added!';
-    button.style.background = '#00ff88';
-    
-    setTimeout(() => {
-      button.innerHTML = originalText;
-      button.style.background = '';
-    }, 1500);
-  }
-  
-  function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCountElement = document.getElementById('cart-count');
-    if (cartCountElement) {
-      cartCountElement.textContent = totalItems;
-    }
-  }
-  
   // Initialize cart count
   updateCartCount();
+  
+  // Check authentication status
+  checkAuthentication();
 });
+
+// CART FUNCTIONS - Moved outside DOMContentLoaded to be globally accessible
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function addToCart(productId, productName, productPrice, productImage, productBrand) {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  
+  if (!isLoggedIn || !currentUser) {
+    alert('Please login first to add items to cart!');
+    return;
+  }
+  
+  const product = {
+    id: productId,
+    name: productName,
+    price: parseInt(productPrice),
+    image: productImage,
+    brand: productBrand,
+    quantity: 1
+  };
+  
+  const existingItem = cart.find(item => item.id === productId);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push(product);
+  }
+  
+  // Save to both main cart and user-specific cart
+  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(cart));
+  updateCartCount();
+  
+  // Show "Added!" feedback
+  showAddedFeedback(productId);
+}
+
+function showAddedFeedback(productId) {
+  // Find the add to cart button for this product
+  const addButton = document.querySelector(`button[onclick*="${productId}"]`);
+  if (addButton) {
+    const originalText = addButton.innerHTML;
+    addButton.innerHTML = '<i class="fas fa-check"></i> Added!';
+    addButton.style.background = '#28a745';
+    addButton.style.color = 'white';
+    
+    // Reset button after 2 seconds
+    setTimeout(() => {
+      addButton.innerHTML = originalText;
+      addButton.style.background = '';
+      addButton.style.color = '';
+    }, 2000);
+  }
+}
+
+function updateCartCount() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCountElement = document.getElementById('cart-count');
+  if (cartCountElement) {
+    cartCountElement.textContent = totalItems;
+  }
+}
+
+// AUTHENTICATION FUNCTIONS
+function checkAuthentication() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  
+  if (isLoggedIn && currentUser) {
+    showUserProfile(currentUser);
+    enableAuthenticatedFeatures();
+  } else {
+    showSignInLink();
+    disableAuthenticatedFeatures();
+  }
+}
+
+function showUserProfile(user) {
+  const userSection = document.getElementById('userSection');
+  userSection.innerHTML = `
+    <div class="user-profile">
+      <i class="fas fa-user-circle"></i>
+      <span class="username">${user.username}</span>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  `;
+}
+
+function showSignInLink() {
+  const userSection = document.getElementById('userSection');
+  userSection.innerHTML = `
+    <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+  `;
+}
+
+function enableAuthenticatedFeatures() {
+  const shopNowBtn = document.getElementById('shopNowBtn');
+  const cartIcon = document.getElementById('cart-icon');
+  
+  shopNowBtn.href = 'shop.html';
+  cartIcon.href = 'cart.html';
+}
+
+function disableAuthenticatedFeatures() {
+  const shopNowBtn = document.getElementById('shopNowBtn');
+  const cartIcon = document.getElementById('cart-icon');
+  
+  shopNowBtn.href = '#';
+  cartIcon.href = '#';
+}
+
+function showLoginMessage() {
+  alert('Please login first to access this feature!');
+}
+
+function logout() {
+  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  
+  if (currentUser) {
+    // Save current cart to user-specific storage
+    const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+    localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(currentCart));
+  }
+  
+  // Clear authentication
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('cart');
+  
+  // Reload page to update UI
+  window.location.reload();
+}
 </script>
 
 

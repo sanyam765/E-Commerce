@@ -371,6 +371,43 @@
         justify-content: center;
       }
     }
+
+    /* User Profile Styles */
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+    }
+
+    .user-profile i {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .username {
+      font-weight: 500;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
   </style>
 </head>
 <body>
@@ -385,13 +422,14 @@
         <div class="searchbar">
           <i class="fas fa-search" id="searchBtn"></i>
           <input type="text" class="input" id="searchInput" placeholder="Search products....">
-          <a href="signin.html" class="bar">Sign in</a>
+          <div id="userSection">
+            <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+          </div>
         </div>
         <div class="navlinks">
-          <a href="index.html" class="bar">Home</a>
-          <a href="shop.html" class="bar">Shop</a>
-          <a href="contact.html" class="bar">Contact</a>
-          <a href="about.html" class="bar">About</a>
+                  <a href="index.html" class="bar">Home</a>
+        <a href="contact.html" class="bar">Contact</a>
+        <a href="about.html" class="bar">About</a>
           <a href="cart.html" class="bar" id="cart-icon">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
@@ -420,21 +458,32 @@
     // Enhanced orders display with images and better styling
     const ordersStats = document.getElementById("orders-stats");
     const ordersList = document.getElementById("orders-list");
-    const orders = JSON.parse(localStorage.getItem("orders")) || [];
+    
+    // Get user-specific orders
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let orders = [];
+    
+    if (currentUser) {
+      orders = JSON.parse(localStorage.getItem(`orders_${currentUser.username}`)) || [];
+    } else {
+      // Fallback to global orders for backward compatibility
+      orders = JSON.parse(localStorage.getItem("orders")) || [];
+    }
 
     // Function to get product image based on name
     function getProductImage(productName) {
       const imageMap = {
-        'Sony WH-1000XM4': 'Images/image.png',
-        'Bose QuietComfort 45': 'Images/image copy.png',
-        'Apple AirPods Pro': 'Images/image3.png',
-        'Samsung Galaxy Buds2': 'Images/image4.png',
-        'JBL Flip 6': 'Images/image5.png',
-        'Beats Studio3': 'Images/image6.png',
-        'Audio-Technica ATH-M50x': 'Images/image7.png',
-        'Sennheiser HD 660S': 'Images/image8.png',
-        'Shure SE215': 'Images/imag1.png',
-        'Beyerdynamic DT 770 Pro': 'Images/image2.png'
+        'HyperX Cloud III': 'Images/imag1.png',
+        'OPPO Enco Air3 Pro': 'Images/image2.png',
+        'OnePlus Nord Buds 3 Pro': 'Images/image3.png',
+        'CMF by Nothing Earbuds': 'Images/image4.png',
+        'Soundcore by Anker Q20i': 'Images/image5.png',
+        'Mivi SuperPods Immersio': 'Images/image6.png',
+        'Apple AirPods 4': 'Images/image7.png',
+        'Marshall Minor IV': 'Images/image8.png',
+        'JBL Flip 6': 'Images/img9.jpg',
+        'Sony SRS-XB43': 'Images/img10.jpg',
+        'Bose SoundLink Revolve+': 'Images/img11.jpeg'
       };
       
       // Try to find exact match first
@@ -577,54 +626,74 @@
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', () => {
+      // Check authentication first
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (!isLoggedIn || !currentUser) {
+        alert('Please login first to view your orders!');
+        window.location.href = 'signin.html';
+        return;
+      }
+      
       displayOrderStats();
       displayOrders();
       updateCartCount();
       
-      // Login handling
-      const storedEmail = localStorage.getItem('userEmail');
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
-
-      if (isLoggedIn && storedEmail && signInLink) {
-        const username = storedEmail.split('@')[0];
-        const userDiv = document.createElement('div');
-        userDiv.classList.add('user-info');
-        userDiv.style.display = 'flex';
-        userDiv.style.alignItems = 'center';
-        userDiv.style.gap = '8px';
-
-        const welcomeSpan = document.createElement('span');
-        welcomeSpan.textContent = `Welcome, ${username}!`;
-        welcomeSpan.style.color = '#fff';
-        welcomeSpan.style.fontWeight = '500';
-        welcomeSpan.style.fontSize = '14px';
-
-        const logoutBtn = document.createElement('button');
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.classList.add('logout-btn');
-        logoutBtn.style.cssText = `
-          background: rgba(255,255,255,0.2);
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 12px;
-        `;
-
-        logoutBtn.addEventListener('click', () => {
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('userEmail');
-          localStorage.removeItem('userPassword');
-          window.location.reload();
-        });
-
-        userDiv.appendChild(welcomeSpan);
-        userDiv.appendChild(logoutBtn);
-        signInLink.replaceWith(userDiv);
-      }
+      // Check authentication status
+      checkAuthentication();
     });
+
+    // AUTHENTICATION FUNCTIONS
+    function checkAuthentication() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (isLoggedIn && currentUser) {
+        showUserProfile(currentUser);
+      } else {
+        showSignInLink();
+      }
+    }
+
+    function showUserProfile(user) {
+      const userSection = document.getElementById('userSection');
+      userSection.innerHTML = `
+        <div class="user-profile">
+          <i class="fas fa-user-circle"></i>
+          <span class="username">${user.username}</span>
+          <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </button>
+        </div>
+      `;
+    }
+
+    function showSignInLink() {
+      const userSection = document.getElementById('userSection');
+      userSection.innerHTML = `
+        <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+      `;
+    }
+
+    function logout() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (currentUser) {
+        // Save current cart to user-specific storage
+        const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+        localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(currentCart));
+      }
+      
+      // Clear authentication
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('cart');
+      
+      // Reload page to update UI
+      window.location.reload();
+    }
 
     // Cart functionality
     let cart = JSON.parse(localStorage.getItem('cart')) || [];

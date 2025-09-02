@@ -180,7 +180,6 @@
       </a>
       <div class="nav-links">
         <a href="index.html">Home</a>
-        <a href="shop.html">Shop</a>
         <a href="contact.html">Contact</a>
         <a href="signup.html">Sign Up</a>
       </div>
@@ -278,11 +277,21 @@ signinForm.addEventListener('submit', function(e){
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
 
-  const storedEmail = localStorage.getItem('userEmail');
-  const storedPassword = localStorage.getItem('userPassword');
-
-  if(email === storedEmail && password === storedPassword){
+  // Get users from localStorage
+  const users = JSON.parse(localStorage.getItem('users')) || [];
+  
+  // Find user by email and password
+  const user = users.find(u => u.email === email && u.password === password);
+  
+  if (user) {
+    // Set login status and current user
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    
+    // Load user-specific cart into main cart
+    const userCart = JSON.parse(localStorage.getItem(`cart_${user.username}`)) || [];
+    localStorage.setItem('cart', JSON.stringify(userCart));
+    
     alert("Signed in successfully!");
     window.location.href = 'index.html';
   } else {

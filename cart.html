@@ -455,6 +455,43 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* User Profile Styles */
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+    }
+
+    .user-profile i {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .username {
+      font-weight: 500;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
   </style>
 </head>
 
@@ -470,16 +507,18 @@
         <div class="searchbar">
           <i class="fas fa-search" id="searchBtn"></i>
           <input type="text" class="input" id="searchInput" placeholder="Search products....">
-          <a href="signin.html" class="bar">Sign in</a>
+          <div id="userSection">
+            <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+          </div>
         </div>
         <div class="navlinks">
           <a href="index.html" class="bar">Home</a>
           <a href="contact.html" class="bar">Contact</a>
           <a href="about.html" class="bar">About</a>
-          <a href="cart.html" class="bar" id="cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-          </a>
+                  <a href="#" class="bar" id="cart-icon">
+          <i class="fas fa-shopping-cart"></i>
+          <span id="cart-count">0</span>
+        </a>
         </div>
       </div>
     </div>
@@ -508,49 +547,55 @@
     
     // Initialize cart page
     document.addEventListener('DOMContentLoaded', () => {
+      // Check authentication first
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (!isLoggedIn || !currentUser) {
+        alert('Please login first to access your cart!');
+        window.location.href = 'signin.html';
+        return;
+      }
+      
+      // Validate and fix cart data structure
+      validateCartData();
       updateCartCount();
       renderCart();
       
-      // Login handling
-      const storedEmail = localStorage.getItem('userEmail');
-      const isLoggedIn = localStorage.getItem('isLoggedIn');
-      const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
-
-      if (isLoggedIn && storedEmail && signInLink) {
-        const username = storedEmail.split('@')[0];
-        const userDiv = document.createElement('div');
-        userDiv.classList.add('user-info');
-        userDiv.style.display = 'flex';
-        userDiv.style.alignItems = 'center';
-        userDiv.style.gap = '8px';
-
-        const welcomeSpan = document.createElement('span');
-        welcomeSpan.textContent = `Welcome, ${username}!`;
-        welcomeSpan.style.color = '#fff';
-        welcomeSpan.style.fontWeight = '500';
-        welcomeSpan.style.fontSize = '14px';
-
-        const logoutBtn = document.createElement('button');
-        logoutBtn.textContent = 'Logout';
-        logoutBtn.classList.add('logout-btn');
-
-        logoutBtn.addEventListener('click', () => {
-          localStorage.removeItem('isLoggedIn');
-          localStorage.removeItem('userEmail');
-          localStorage.removeItem('userPassword');
-          window.location.reload();
-        });
-
-        userDiv.appendChild(welcomeSpan);
-        userDiv.appendChild(logoutBtn);
-        signInLink.replaceWith(userDiv);
-      }
+      // Check authentication status
+      checkAuthentication();
     });
 
     function updateCartCount() {
       const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
       cartCount.textContent = totalItems;
     }
+
+    function validateCartData() {
+      // Filter out invalid items and ensure proper structure
+      cart = cart.filter(item => {
+        if (!item || !item.id || !item.name || !item.price || !item.quantity) {
+          return false;
+        }
+        
+        // Ensure quantity is a number and positive
+        if (typeof item.quantity !== 'number' || item.quantity <= 0) {
+          item.quantity = 1;
+        }
+        
+        // Ensure price is a number
+        if (typeof item.price !== 'number') {
+          item.price = parseInt(item.price) || 0;
+        }
+        
+        return true;
+      });
+      
+      // Save validated cart back to localStorage
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+
 
     // Function to fix image paths based on product names
     function getCorrectImagePath(productName) {
@@ -563,12 +608,9 @@
         'Mivi SuperPods Immersio': 'Images/image6.png',
         'Apple AirPods 4': 'Images/image7.png',
         'Marshall Minor IV': 'Images/image8.png',
-        'JBL Flip 6': 'Images/image.png',
-        'Sony SRS-XB43': 'Images/image copy.png',
-        'Bose SoundLink Revolve+': 'Images/bgm.png',
-        'Apple Watch Series 9': 'Images/thumb-1920-1398235.png',
-        'Samsung Galaxy Watch 6': 'Images/thumb-1920-1398235.png',
-        'Garmin Fenix 7': 'Images/thumb-1920-1398235.png'
+        'JBL Flip 6': 'Images/img9.jpg',
+        'Sony SRS-XB43': 'Images/img10.jpg',
+        'Bose SoundLink Revolve+': 'Images/img11.jpeg'
       };
       
       return imageMapping[productName] || 'Images/imag1.png'; // Default fallback
@@ -590,29 +632,29 @@
         return;
       }
 
-      const cartItemsHTML = cart.map(item => {
-        const correctImagePath = getCorrectImagePath(item.name);
-        return `
-          <div class="cart-item" data-id="${item.id}">
-            <div class="cart-item-image">
-              <img src="${correctImagePath}" alt="${item.name}" onerror="this.src='Images/imag1.png'">
-            </div>
-            <div class="cart-item-details">
-              <h3>${item.name}</h3>
-              <div class="brand">${item.brand}</div>
-              <div class="price">₹${item.price.toLocaleString()}</div>
-            </div>
-            <div class="quantity-controls">
-              <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
-              <span class="quantity-display">${item.quantity}</span>
-              <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
-          </div>
-          <button class="remove-btn" onclick="removeFromCart(${item.id})">
-            <i class="fas fa-trash"></i> Remove
-          </button>
-        </div>
-      `;
-      }).join('');
+             const cartItemsHTML = cart.map(item => {
+         const correctImagePath = getCorrectImagePath(item.name);
+         return `
+           <div class="cart-item" data-id="${item.id}">
+             <div class="cart-item-image">
+               <img src="${correctImagePath}" alt="${item.name}" onerror="this.src='Images/imag1.png'">
+             </div>
+             <div class="cart-item-details">
+               <h3>${item.name}</h3>
+               <div class="brand">${item.brand}</div>
+               <div class="price">₹${item.price.toLocaleString()}</div>
+             </div>
+             <div class="quantity-controls">
+               <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+               <span class="quantity-display">${item.quantity}</span>
+               <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+           </div>
+           <button class="remove-btn" onclick="removeFromCart('${item.id}')">
+             <i class="fas fa-trash"></i> Remove
+           </button>
+         </div>
+       `;
+       }).join('');
 
       const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const subtotal = total;
@@ -647,6 +689,7 @@
             <i class="fas fa-trash-alt"></i>
             Clear Cart
           </button>
+
         </div>
       `;
     }
@@ -665,7 +708,11 @@
           return;
         } else {
           item.quantity = newQuantity;
+          const currentUser = JSON.parse(localStorage.getItem('currentUser'));
           localStorage.setItem('cart', JSON.stringify(cart));
+          if (currentUser) {
+            localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(cart));
+          }
           updateCartCount();
           renderCart();
         }
@@ -683,7 +730,11 @@
         }
         
         cart = cart.filter(item => item.id !== productId);
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         localStorage.setItem('cart', JSON.stringify(cart));
+        if (currentUser) {
+          localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(cart));
+        }
         updateCartCount();
         renderCart();
       }
@@ -707,11 +758,68 @@
       
       if (confirm('Are you sure you want to clear your entire cart?')) {
         cart = [];
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         localStorage.removeItem('cart');
+        if (currentUser) {
+          localStorage.removeItem(`cart_${currentUser.username}`);
+        }
         updateCartCount();
         renderCart();
         alert('Cart cleared successfully');
       }
+    }
+
+
+
+    // AUTHENTICATION FUNCTIONS
+    function checkAuthentication() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (isLoggedIn && currentUser) {
+        showUserProfile(currentUser);
+      } else {
+        showSignInLink();
+      }
+    }
+
+    function showUserProfile(user) {
+      const userSection = document.getElementById('userSection');
+      userSection.innerHTML = `
+        <div class="user-profile">
+          <i class="fas fa-user-circle"></i>
+          <span class="username">${user.username}</span>
+          <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </button>
+        </div>
+      `;
+    }
+
+    function showSignInLink() {
+      const userSection = document.getElementById('userSection');
+      userSection.innerHTML = `
+        <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+      `;
+    }
+
+    function logout() {
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      
+      if (currentUser) {
+        // Save current cart to user-specific storage
+        const currentCart = JSON.parse(localStorage.getItem('cart')) || [];
+        localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(currentCart));
+      }
+      
+      // Clear authentication
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('cart');
+      
+      // Reload page to update UI
+      window.location.reload();
     }
 
     // Search functionality

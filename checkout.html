@@ -248,13 +248,14 @@
         <div class="searchbar">
           <i class="fas fa-search" id="searchBtn"></i>
           <input type="text" class="input" id="searchInput" placeholder="Search products....">
-          <a href="signin.html" class="bar">Sign in</a>
+          <div id="userSection">
+            <a href="signin.html" class="bar" id="signInLink">Sign in</a>
+          </div>
         </div>
         <div class="navlinks">
-          <a href="index.html" class="bar">Home</a>
-          <a href="shop.html" class="bar">Shop</a>
-          <a href="contact.html" class="bar">Contact</a>
-          <a href="about.html" class="bar">About</a>
+                  <a href="index.html" class="bar">Home</a>
+        <a href="contact.html" class="bar">Contact</a>
+        <a href="about.html" class="bar">About</a>
           <a href="cart.html" class="bar" id="cart-icon">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
@@ -403,16 +404,31 @@
       date: new Date().toLocaleString()
     };
 
-    // Save order in localStorage
-    let orders = JSON.parse(localStorage.getItem("orders")) || [];
-    orders.push(order);
-    localStorage.setItem("orders", JSON.stringify(orders));
+    // Save order in user-specific localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let orders = [];
+    
+    if (currentUser) {
+      orders = JSON.parse(localStorage.getItem(`orders_${currentUser.username}`)) || [];
+      orders.push(order);
+      localStorage.setItem(`orders_${currentUser.username}`, JSON.stringify(orders));
+    } else {
+      // Fallback to global orders for backward compatibility
+      orders = JSON.parse(localStorage.getItem("orders")) || [];
+      orders.push(order);
+      localStorage.setItem("orders", JSON.stringify(orders));
+    }
 
     // Show success
     document.getElementById("success-message").style.display = "block";
 
     // Clear cart
     localStorage.removeItem("cart");
+    
+    // Also clear user-specific cart
+    if (currentUser) {
+      localStorage.removeItem(`cart_${currentUser.username}`);
+    }
 
     // Redirect to orders page or homepage
     setTimeout(() => {
