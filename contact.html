@@ -258,41 +258,32 @@
 
       if (isLoggedIn && storedEmail && signInLink) {
         const username = storedEmail.split('@')[0];
-        const userDiv = document.createElement('div');
-        userDiv.classList.add('user-info');
-        userDiv.style.display = 'flex';
-        userDiv.style.alignItems = 'center';
-        userDiv.style.gap = '8px';
-
-        const welcomeSpan = document.createElement('span');
-        welcomeSpan.textContent = `Welcome, ${username}!`;
-        welcomeSpan.style.color = '#fff';
-        welcomeSpan.style.fontWeight = '500';
-        welcomeSpan.style.fontSize = '14px';
-
+        // Replace sign-in link with Logout button
         const logoutBtn = document.createElement('button');
         logoutBtn.textContent = 'Logout';
         logoutBtn.classList.add('logout-btn');
-        logoutBtn.style.cssText = `
-          background: rgba(255,255,255,0.2);
-          color: white;
-          border: none;
-          padding: 8px 16px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 12px;
-        `;
-
         logoutBtn.addEventListener('click', () => {
           localStorage.removeItem('isLoggedIn');
           localStorage.removeItem('userEmail');
           localStorage.removeItem('userPassword');
           window.location.reload();
         });
+        signInLink.replaceWith(logoutBtn);
 
-        userDiv.appendChild(welcomeSpan);
-        userDiv.appendChild(logoutBtn);
-        signInLink.replaceWith(userDiv);
+        // Append profile icon and username to right side of navbar links
+        const navLinksRight = document.querySelector('.navlinks');
+        if (navLinksRight && !document.querySelector('.user-profile')) {
+          const profileDiv = document.createElement('div');
+          profileDiv.classList.add('user-profile');
+          const icon = document.createElement('i');
+          icon.className = 'fas fa-user-circle profile-icon';
+          const nameSpan = document.createElement('span');
+          nameSpan.classList.add('username');
+          nameSpan.textContent = username;
+          profileDiv.appendChild(icon);
+          profileDiv.appendChild(nameSpan);
+          navLinksRight.appendChild(profileDiv);
+        }
       }
     });
 

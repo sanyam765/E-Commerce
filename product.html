@@ -9,57 +9,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
   <style>
-    body {
-        background: #f5f7fa;
-    }
+    body { background: var(--bg-light); }
     .product-container {
+        width: 90vw;
         max-width: 1100px;
-        margin: 40px auto;
-        padding: 32px 24px;
+        margin: 0 auto;
+        padding: 24px;
         background: #fff;
-        border-radius: 18px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
     .product-details {
         display: flex;
         flex-wrap: wrap;
-        gap: 48px;
-        margin-top: 24px;
+        gap: 24px;
+        margin-top: 12px;
     }
     .product-images {
-        flex: 1 1 340px;
+        flex: 1 1 520px;
         display: flex;
         flex-direction: column;
         align-items: center;
         background: #f8fafc;
         border-radius: 16px;
-        padding: 32px 16px 24px 16px;
+        padding: 16px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-        min-width: 320px;
-        max-width: 420px;
+        max-width: 520px;
     }
     .main-image {
         width: 100%;
-        max-width: 320px;
-        max-height: 320px;
+        max-width: 520px;
+        height: 520px;
         aspect-ratio: 1/1;
         object-fit: contain;
         background: #fff;
         border-radius: 14px;
         box-shadow: 0 2px 12px rgba(0,0,0,0.07);
         border: 1.5px solid #e9ecef;
-        padding: 18px;
-        margin-bottom: 18px;
+        padding: 10px;
+        margin-bottom: 12px;
         transition: box-shadow 0.2s;
     }
     .main-image:hover {
         box-shadow: 0 6px 24px rgba(0,0,0,0.12);
     }
-    .thumbnail-images {
-        display: flex;
-        gap: 8px;
-        margin-top: 0;
-    }
+    .thumbnail-images { display: flex; gap: 6px; margin-top: 0; }
     .thumbnail {
         width: 48px;
         height: 48px;
@@ -76,13 +70,8 @@
         border-color: var(--primary-color);
         box-shadow: 0 2px 8px rgba(0,114,255,0.10);
     }
-    .product-info {
-        flex: 2 1 400px;
-        padding: 0 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
+    
+    .product-info { flex: 2 1 400px; min-width: 0; padding: 0; display: flex; flex-direction: column; justify-content: flex-start; }
     .brand-name {
         color: var(--text-muted);
         font-size: 15px;
@@ -201,11 +190,7 @@
         font-size: 1rem;
         font-weight: 600;
     }
-    .action-buttons {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 24px;
-    }
+    .action-buttons { display: flex; gap: 12px; margin-bottom: 12px; }
     .add-to-cart-btn {
         flex: 2;
         background: var(--primary-color);
@@ -248,12 +233,7 @@
         color: white;
         border-color: var(--primary-color);
     }
-    .product-description {
-        margin-top: 32px;
-        padding: 24px;
-        background: #f8fafc;
-        border-radius: 12px;
-    }
+    .product-description { margin-top: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; }
     .description-title {
         font-size: 1.4rem;
         font-weight: 600;
@@ -265,20 +245,14 @@
         color: var(--text-muted);
         font-size: 1.05rem;
     }
-    .specifications {
-        margin-top: 32px;
-    }
+    .specifications { margin-top: 16px; }
     .specs-title {
         font-size: 1.3rem;
         font-weight: 600;
         margin-bottom: 12px;
         color: var(--text-color);
     }
-    .specs-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 16px;
-    }
+    .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
     .spec-item {
         padding: 14px;
         background: #f8fafc;
@@ -293,9 +267,8 @@
     .spec-value {
         color: var(--text-muted);
     }
-    .related-products {
-        margin-top: 48px;
-    }
+    .related-products { margin-top: 24px; }
+    .related-wrapper { width: 90vw; max-width: 1100px; margin: 20px auto 40px; background: #fff; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.05); padding: 24px; }
     .related-title {
         font-size: 1.5rem;
         font-weight: 600;
@@ -303,11 +276,18 @@
         color: var(--text-color);
         text-align: center;
     }
-    .related-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 18px;
-    }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; width: 100%; box-sizing: border-box; }
+    @media (max-width: 900px) { .related-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; } }
+    .related-grid .product-card { padding: 16px; border-radius: 16px; background: var(--bg-light); box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: transform 0.25s ease, box-shadow 0.25s ease; width: 100%; display: flex; flex-direction: column; }
+    .related-grid .product-card:hover { transform: translateY(-6px); box-shadow: 0 14px 30px rgba(0,0,0,0.12); }
+    .related-grid .product-card .product-image { width: 100%; height: 220px; display: flex; align-items: center; justify-content: center; }
+    .related-grid .product-card .product-image img { width: 100%; height: 100%; object-fit: contain; }
+    .related-grid .product-card h3 { font-size: 1.05rem; margin: 10px 0 6px; color: var(--text-color); }
+    .related-grid .product-card .price-section { display: flex; align-items: center; gap: 10px; margin: 8px 0 12px; }
+    .related-grid .product-card .current-price { color: var(--primary-color); font-weight: 700; }
+    .related-grid .product-card .original-price { color: var(--text-muted); text-decoration: line-through; font-size: 0.95rem; }
+    .related-grid .product-card .add-to-cart { display: inline-flex; align-items: center; gap: 8px; background: #f8f9fa; color: #495057; padding: 10px 16px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.25s ease; border: 2px solid #e9ecef; width: 100%; justify-content: center; }
+    .related-grid .product-card .add-to-cart:hover { background: #e9ecef; border-color: #dee2e6; }
     .loading {
         text-align: center;
         padding: 60px;
@@ -321,57 +301,48 @@
         font-size: 1.1rem;
     }
     @media (max-width: 900px) {
-        .product-details {
-            flex-direction: column;
-            gap: 32px;
-        }
-        .product-images, .product-info {
-            max-width: 100%;
-        }
+        .product-details { flex-direction: column; gap: 20px; }
+        .product-images, .product-info { width: 100%; }
+        .main-image { max-width: 90vw; height: auto; }
+    }
+    @media (min-width: 901px) {
+        .product-images { max-width: 520px; }
     }
     @media (max-width: 600px) {
-        .product-container {
-            padding: 10px 2vw;
-        }
-        .main-image {
-            max-width: 90vw;
-            max-height: 60vw;
-            padding: 8px;
-        }
-        .product-title {
-            font-size: 1.3rem;
-        }
-        .current-price {
-            font-size: 1.2rem;
-        }
+        .product-container { padding: 16px 2vw; width: 96vw; }
+        .main-image { max-width: 90vw; max-height: 60vw; padding: 8px; }
+        .product-title { font-size: 1.6rem; }
+        .current-price { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
-    <!-- Navigation -->
+    <!-- NAVBAR (match index.html) -->
     <nav class="navbar">
-        <div class="nav-container" style="display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 70px;">
-            <div class="hearhut-logo">
-                <i class="fas fa-headphones-alt"></i>
-                <span>Hear<span class="highlight">Hut</span></span>
+      <div class="logo">
+        <div class="nav-links">
+          <div class="hearhut-logo">
+            <i class="fas fa-headphones-alt"></i>
+            <span>Hear<span class="highlight">Hut</span></span>
+          </div>
+          <div class="searchbar">
+            <i class="fas fa-search" id="searchBtn"></i>
+            <input type="text" class="input" id="searchInput" placeholder="Search products....">
+            <div id="userSection">
+              <a href="signin.html" class="bar" id="signInLink">Sign in</a>
             </div>
-            <div class="searchbar" style="display: flex; align-items: center; gap: 10px;">
-                <i class="fas fa-search" id="searchBtn"></i>
-                <input type="text" class="input" id="searchInput" placeholder="Search products....">
-                <div id="userSection">
-                    <a href="signin.html" class="bar" id="signInLink">Sign in</a>
-                </div>
-            </div>
-            <div class="navlinks" style="display: flex; align-items: center; gap: 30px;">
-                        <a href="index.html" class="bar">Home</a>
-        <a href="contact.html" class="bar">Contact</a>
-        <a href="about.html" class="bar">About</a>
-                <a href="cart.html" class="bar" id="cart-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span id="cart-count">0</span>
-                </a>
-            </div>
+          </div>
+          <div class="navlinks">
+            <a href="index.html" class="bar">Home</a>
+            <a href="contact.html" class="bar">Contact</a>
+            <a href="about.html" class="bar">About</a>
+            <a href="#" class="bar" id="cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+              <span id="cart-count">0</span>
+            </a>
+          </div>
         </div>
+      </div>
     </nav>
 
     <div class="product-container">
@@ -447,13 +418,16 @@
                 </div>
             </div>
             
-            <div class="related-products">
-                <h2 class="related-title">Related Products</h2>
-                <div class="related-grid" id="related-grid">
-                    <!-- Related products will be populated here -->
-                </div>
-            </div>
         </div>
+  </div>
+
+  <div class="related-wrapper">
+    <div class="related-products">
+        <h2 class="related-title">Related Products</h2>
+        <div class="related-grid" id="related-grid">
+            <!-- Related products will be populated here -->
+        </div>
+    </div>
   </div>
 
     <script>
@@ -1001,6 +975,37 @@
             updateCartCount();
             setupSearch();
             loadProduct();
+
+            // Align navbar auth behavior with index.html
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const signInLink = document.querySelector('.searchbar a[href="signin.html"]');
+            if (isLoggedIn && currentUser && signInLink) {
+                const logoutBtn = document.createElement('button');
+                logoutBtn.textContent = 'Logout';
+                logoutBtn.classList.add('logout-btn');
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem('cart');
+                    window.location.reload();
+                });
+                signInLink.replaceWith(logoutBtn);
+
+                const navLinksRight = document.querySelector('.navlinks');
+                if (navLinksRight && !document.querySelector('.user-profile')) {
+                    const profileDiv = document.createElement('div');
+                    profileDiv.classList.add('user-profile');
+                    const icon = document.createElement('i');
+                    icon.className = 'fas fa-user-circle profile-icon';
+                    const nameSpan = document.createElement('span');
+                    nameSpan.classList.add('username');
+                    nameSpan.textContent = currentUser.username;
+                    profileDiv.appendChild(icon);
+                    profileDiv.appendChild(nameSpan);
+                    navLinksRight.appendChild(profileDiv);
+                }
+            }
         });
     </script>
 </body>

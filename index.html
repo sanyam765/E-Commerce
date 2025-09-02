@@ -222,38 +222,60 @@
 .user-profile {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: white;
+  gap: 0;
+
+  color: var(--text-color);
+}
+
+.user-profile .profile-icon {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.user-profile .username {
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .user-profile i {
-  font-size: 18px;
-  color: #fff;
+  color: var(--text-color);
 }
 
 .username {
-  font-weight: 500;
-  font-size: 14px;
-  color: #fff;
-}
-
-.logout-btn {
-  background: rgba(255,255,255,0.2);
-  color: white;
-  border: none;
-  padding: 6px 12px;
+  position: relative;
+  text-decoration: none;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  height: 35px;
   border-radius: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  display: flex;
+  text-align: center;
+  padding: 2px 10px;
+  font-size: 1.5rem;
+  display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: background 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
 }
 
-.logout-btn:hover {
-  background: rgba(255,255,255,0.3);
+.profile-icon {
+  position: relative;
+  text-decoration: none;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  height: 35px;
+  border-radius: 6px;
+  text-align: center;
+  padding: 2px 10px;
+  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
+
 </style>
 </head>
 
@@ -628,32 +650,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isLoggedIn && storedEmail && signInLink) {
     const username = storedEmail.split('@')[0];
-    const userDiv = document.createElement('div');
-    userDiv.classList.add('user-info');
-    userDiv.style.display = 'flex';
-    userDiv.style.alignItems = 'center';
-    userDiv.style.gap = '8px';
 
-    const welcomeSpan = document.createElement('span');
-    welcomeSpan.textContent = `Welcome, ${username}!`;
-    welcomeSpan.style.color = '#fff';
-    welcomeSpan.style.fontWeight = '500';
-    welcomeSpan.style.fontSize = '14px';
-
+    // Replace sign-in link with Logout button (kept in the same place)
     const logoutBtn = document.createElement('button');
     logoutBtn.textContent = 'Logout';
     logoutBtn.classList.add('logout-btn');
-
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('userPassword');
       window.location.reload();
     });
+    signInLink.replaceWith(logoutBtn);
 
-    userDiv.appendChild(welcomeSpan);
-    userDiv.appendChild(logoutBtn);
-    signInLink.replaceWith(userDiv);
+    // Append profile (icon + name) to the right end of navbar links
+    const navLinksRight = document.querySelector('.navlinks');
+    if (navLinksRight && !document.querySelector('.user-profile')) {
+      const profileDiv = document.createElement('div');
+      profileDiv.classList.add('user-profile');
+
+      const icon = document.createElement('i');
+      icon.className = 'fas fa-user-circle profile-icon';
+
+      const nameSpan = document.createElement('span');
+      nameSpan.classList.add('username');
+      nameSpan.textContent = username;
+
+      profileDiv.appendChild(icon);
+      profileDiv.appendChild(nameSpan);
+      navLinksRight.appendChild(profileDiv);
+    }
   }
 
   // SEARCH FUNCTIONALITY
@@ -814,17 +840,29 @@ function checkAuthentication() {
 }
 
 function showUserProfile(user) {
+  // Keep Logout in the original sign-in position
   const userSection = document.getElementById('userSection');
   userSection.innerHTML = `
-    <div class="user-profile">
-      <i class="fas fa-user-circle"></i>
-      <span class="username">${user.username}</span>
-      <button class="logout-btn" onclick="logout()">
-        <i class="fas fa-sign-out-alt"></i>
-        Logout
-      </button>
-    </div>
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      Logout
+    </button>
   `;
+
+  // Move profile icon + name to the far right inside .navlinks
+  const navLinksRight = document.querySelector('.navlinks');
+  if (navLinksRight && !document.querySelector('.user-profile')) {
+    const profileDiv = document.createElement('div');
+    profileDiv.classList.add('user-profile');
+    const icon = document.createElement('i');
+    icon.className = 'fas fa-user-circle profile-icon';
+    const nameSpan = document.createElement('span');
+    nameSpan.classList.add('username');
+    nameSpan.textContent = user.username;
+    profileDiv.appendChild(icon);
+    profileDiv.appendChild(nameSpan);
+    navLinksRight.appendChild(profileDiv);
+  }
 }
 
 function showSignInLink() {

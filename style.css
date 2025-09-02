@@ -703,6 +703,51 @@ nav.sticky {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: none;
+  outline: none;
+}
+
+/* Consistent navbar user/profile styles across pages */
+.user-profile {
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+  gap: 0;
+}
+
+.username {
+  position: relative;
+  text-decoration: none;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  height: 35px;
+  border-radius: 6px;
+  text-align: center;
+  padding: 2px 10px;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.profile-icon {
+  position: relative;
+  text-decoration: none;
+  background-color: var(--bg-light);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  height: 35px;
+  border-radius: 6px;
+  text-align: center;
+  padding: 2px 10px;
+  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 /* Underline animation like nav links */

@@ -373,41 +373,7 @@
     }
 
     /* User Profile Styles */
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: white;
-    }
-
-    .user-profile i {
-      font-size: 18px;
-      color: #fff;
-    }
-
-    .username {
-      font-weight: 500;
-      font-size: 14px;
-      color: #fff;
-    }
-
-    .logout-btn {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: background 0.3s ease;
-    }
-
-    .logout-btn:hover {
-      background: rgba(255,255,255,0.3);
-    }
+    /* Navbar user/profile uses shared styles from style.css */
   </style>
 </head>
 <body>
@@ -659,15 +625,24 @@
     function showUserProfile(user) {
       const userSection = document.getElementById('userSection');
       userSection.innerHTML = `
-        <div class="user-profile">
-          <i class="fas fa-user-circle"></i>
-          <span class="username">${user.username}</span>
-          <button class="logout-btn" onclick="logout()">
-            <i class="fas fa-sign-out-alt"></i>
-            Logout
-          </button>
-        </div>
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </button>
       `;
+      const navLinksRight = document.querySelector('.navlinks');
+      if (navLinksRight && !document.querySelector('.user-profile')) {
+        const profileDiv = document.createElement('div');
+        profileDiv.classList.add('user-profile');
+        const icon = document.createElement('i');
+        icon.className = 'fas fa-user-circle profile-icon';
+        const nameSpan = document.createElement('span');
+        nameSpan.classList.add('username');
+        nameSpan.textContent = user.username;
+        profileDiv.appendChild(icon);
+        profileDiv.appendChild(nameSpan);
+        navLinksRight.appendChild(profileDiv);
+      }
     }
 
     function showSignInLink() {
